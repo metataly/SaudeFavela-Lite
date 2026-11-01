@@ -1,0 +1,6 @@
+{
+  "name": "SaúdeFavela-Lite",
+  "description": "PWA acessível de baixo consumo de dados para orientação em saúde na Atenção Primária (SUS) no Rio de Janeiro.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

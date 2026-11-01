@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.25" />
+    </filter>
+  </defs>
+  
+  <!-- Background rounded squircle with safe padding -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  
+  <!-- Inner circular glow -->
+  <circle cx="256" cy="256" r="190" fill="#ffffff" fill-opacity="0.08" />
+  
+  <!-- Health Cross with Community Heart -->
+  <g filter="url(#shadow)">
+    <!-- White primary healthcare cross -->
+    <path d="M216 110 h80 v106 h106 v80 h-106 v106 h-80 v-106 h-106 v-80 h106 z" fill="#ffffff" />
+    
+    <!-- Central community heart in emerald green -->
+    <path d="M256 220 c-14 -20 -38 -20 -52 -5 c-15 16 -12 39 4 55 l48 44 l48 -44 c16 -16 19 -39 4 -55 c-14 -15 -38 -15 -52 5 z" fill="#059669" />
+  </g>
+</svg>
