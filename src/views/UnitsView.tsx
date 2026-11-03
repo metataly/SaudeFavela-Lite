@@ -9,14 +9,13 @@ import {
   Bookmark,
   BookmarkCheck,
   Navigation,
-  CheckCircle2,
   AlertCircle,
   ExternalLink,
   Volume2,
   CalendarCheck2,
   HelpCircle,
-  ShieldCheck,
-  Building2
+  Building2,
+  FileText
 } from 'lucide-react';
 import { HealthUnit } from '../types';
 import { HEALTH_UNITS_DATA } from '../data/healthUnitsData';
@@ -141,7 +140,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       list = list.filter((u) => {
-        const text = `${u.name} ${u.cnesOfficialName} ${u.cnesCode} ${u.community} ${u.neighborhood} ${u.address} ${u.landmarks} ${u.servicesOffered.join(' ')}`
+        const text = `${u.name} ${u.community} ${u.neighborhood} ${u.address} ${u.landmarks} ${u.servicesOffered.join(' ')}`
           .toLowerCase()
           .normalize('NFD')
           .replace(/[\u0300-\u036f]/g, '');
@@ -163,7 +162,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
 
   const handleReadUnit = (unit: HealthUnit) => {
     const text = `
-      ${unit.name}. Código CNES: ${unit.cnesCode}.
+      ${unit.name}.
       Localizada em ${unit.community}, no bairro ${unit.neighborhood}, Área de Planejamento ${unit.healthDistrict}.
       Endereço: ${unit.address}.
       Ponto de referência: ${unit.landmarks}.
@@ -182,7 +181,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
           Unidades de Saúde no Rio de Janeiro (APS & UPAs)
         </h1>
         <p className="text-xs sm:text-sm text-slate-600 mt-1">
-          Catálogo auditado com códigos CNES, Áreas de Planejamento (AP) e referências territoriais nas comunidades.
+          Catálogo informativo com Áreas de Planejamento (AP) e referências territoriais nas comunidades.
         </p>
       </div>
 
@@ -198,7 +197,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
             type="search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Ex: Rocinha, Maré, Alemão, Cidade de Deus, CNES 6867622..."
+            placeholder="Ex: Rocinha, Maré, Alemão, Cidade de Deus, Santa Marta..."
             className="w-full min-h-[48px] pl-11 pr-24 py-2.5 bg-white border border-slate-300 rounded-2xl text-sm text-slate-900 placeholder:text-slate-600 focus:outline-hidden focus:ring-2 focus:ring-sky-600 focus:border-sky-600 shadow-2xs"
           />
           <div className="absolute right-2 flex items-center gap-1">
@@ -292,7 +291,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
 
       {/* Contador de Resultados */}
       <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
-        <span>Mostrando <strong>{filteredUnits.length}</strong> unidades auditadas</span>
+        <span>Mostrando <strong>{filteredUnits.length}</strong> unidades</span>
         <span className="text-[11px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-medium">
           Armazenado localmente · Busca offline
         </span>
@@ -325,7 +324,8 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
             const isSaved = savedIds.includes(unit.id);
             const distance = getDistanceKm(unit);
             const isUpa = unit.unitType === 'upa_emergencia';
-            const isVerifiedCNES = unit.verificationStatus === 'verificada_cnes';
+            const isDatedSource = unit.verificationStatus === 'fonte_oficial_datada';
+            const hasDirectPhone = !unit.phone.includes('Confirmar');
 
             return (
               <article
@@ -334,7 +334,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                   isUpa ? 'border-rose-300 ring-1 ring-rose-100' : 'border-slate-200'
                 }`}
               >
-                {/* Cabeçalho do Card com CNES e Distrito Sanitário */}
+                {/* Cabeçalho do Card */}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="flex flex-wrap items-center gap-1.5 text-xs text-slate-500 mb-1">
@@ -343,10 +343,6 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                       </span>
                       <span aria-hidden="true">·</span>
                       <span>{unit.healthDistrict}</span>
-                      <span aria-hidden="true">·</span>
-                      <span className="font-mono text-[11px] font-bold text-slate-700 bg-slate-100 px-1.5 py-0.2 rounded">
-                        CNES {unit.cnesCode}
-                      </span>
                       {distance && (
                         <>
                           <span aria-hidden="true">·</span>
@@ -357,9 +353,6 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                     <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                       {unit.name}
                     </h2>
-                    <p className="text-[11px] text-slate-500 font-mono mt-0.5">
-                      Registro CNES: {unit.cnesOfficialName}
-                    </p>
                   </div>
 
                   <div className="flex items-center gap-1 shrink-0">
@@ -406,12 +399,18 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
 
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
-                    <a
-                      href={`tel:${unit.phone.replace(/\D/g, '')}`}
-                      className="font-bold text-sky-700 hover:text-sky-900 underline min-h-[44px] flex items-center"
-                    >
-                      {unit.phone} (Toque para ligar)
-                    </a>
+                    {hasDirectPhone ? (
+                      <a
+                        href={`tel:${unit.phone.split('/')[0].replace(/\D/g, '')}`}
+                        className="font-bold text-sky-700 hover:text-sky-900 underline min-h-[44px] flex items-center"
+                      >
+                        {unit.phone} (Toque para ligar)
+                      </a>
+                    ) : (
+                      <span className="text-slate-700 min-h-[44px] flex items-center">
+                        {unit.phone}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -450,18 +449,14 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                   </div>
                 )}
 
-                {/* Rodapé com Selo Oficial e Ações */}
+                {/* Rodapé com Fonte, Ano e Confirmação */}
                 <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[11px] text-slate-600">
                   <div className="flex items-center gap-1.5">
-                    {isVerifiedCNES ? (
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    ) : (
-                      <HelpCircle className="w-4 h-4 text-amber-600 shrink-0" />
-                    )}
+                    <FileText className="w-4 h-4 text-slate-500 shrink-0" />
                     <span>
-                      {isVerifiedCNES
-                        ? `CNES ${unit.cnesCode} Confirmado no DATASUS · Atualizado em ${unit.lastUpdated}`
-                        : `CNES ${unit.cnesCode} · Pendente conferência presencial de horário`}
+                      {isDatedSource
+                        ? `Dados conforme ${unit.dataSource}, ${unit.sourceYear || '2021'}. Confirme por telefone antes de ir.`
+                        : 'Dados a confirmar no CNES (cnes.saude.gov.br) ou na Central 1746 antes de ir.'}
                     </span>
                   </div>
 

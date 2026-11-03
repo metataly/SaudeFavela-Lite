@@ -1,32 +1,25 @@
 import { HealthUnit } from '../types';
 
 /**
- * Catálogo Auditado de Unidades de Atenção Primária e Urgência no Rio de Janeiro
- * Fontes Oficiais:
- * - CNES / DATASUS (https://cnes.saude.gov.br/)
- * - Secretaria Municipal de Saúde do Rio de Janeiro (SMS-RJ / Onde Ser Atendido)
- * - Portal Brasileiro de Dados Abertos (dataset CNES)
+ * Catálogo de Unidades de Atenção Primária e Urgência no Rio de Janeiro
  *
  * Situação cadastral:
- * - 'verificada_cnes': Cadastro Ativo confirmado no CNES/SMS-RJ com código oficial e endereço.
- * - 'pendente_conferencia_presencial': Unidade real confirmada no CNES, porém ramal telefônico e
- *   escalas de sábado necessitam de validação empírica presencial pela equipe de pesquisa.
+ * - 'fonte_oficial_datada': Dados cadastrais obtidos de publicação oficial com ano especificado.
+ * - 'a_confirmar': Endereço, telefone e horário pendentes de confirmação no CNES ou na Central 1746.
  */
 export const HEALTH_UNITS_DATA: HealthUnit[] = [
   {
     id: 'cf-rinaldo-de-lamare',
     name: 'Clínica da Família Rinaldo De Lamare',
-    cnesOfficialName: 'SMS CLINICA DA FAMILIA RINALDO DE LAMARE AP 21',
-    cnesCode: '6867622',
     unitType: 'clinica_familia',
     community: 'Rocinha / São Conrado',
     neighborhood: 'São Conrado',
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Zona Sul)',
-    address: 'Av. Niemeyer, 776 - São Conrado, Rio de Janeiro - RJ, CEP 22450-221',
+    address: 'Av. Niemeyer, 776, São Conrado, Rio de Janeiro - RJ',
     landmarks: 'No Centro de Cidadania Rinaldo De Lamare, em frente à passarela da Rocinha e ao Metrô São Conrado',
-    hours: 'Segunda a sexta das 07:00 às 18:00 | Sábado das 08:00 às 12:00',
-    phone: '(21) 3111-1120',
+    hours: 'Segunda a sexta das 07:00 às 18:00',
+    phone: '(21) 3324-2454 / (21) 3324-2487',
     servicesOffered: [
       'Consultas Médicas (Medicina de Família e Comunidade)',
       'Consultas de Enfermagem e Acolhimento à Demanda Espontânea',
@@ -37,10 +30,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Acompanhamento de Hipertensão e Diabetes (Hiperdia)',
       'Visitas Domiciliares das Equipes de Saúde da Família (ACS)'
     ],
-    dataSource: 'Cadastro Nacional de Estabelecimentos de Saúde (CNES/DATASUS) / SMS-RJ',
-    sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-15',
+    dataSource: 'Lista de unidades da SMS-Rio',
+    sourceYear: '2021',
+    sourceUrl: 'https://saude.prefeitura.rio',
+    verificationStatus: 'fonte_oficial_datada',
+    lastUpdated: '2021-12-31',
     coordinates: {
       lat: -22.9922,
       lng: -43.2505,
@@ -51,17 +45,15 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
   {
     id: 'cf-maria-do-socorro',
     name: 'Clínica da Família Maria do Socorro Silva e Souza',
-    cnesOfficialName: 'SMS CLINICA DA FAMILIA MARIA DO SOCORRO SILVA E SOUZA AP 21',
-    cnesCode: '6940869',
     unitType: 'clinica_familia',
     community: 'Rocinha (Curva do S)',
     neighborhood: 'Rocinha',
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Zona Sul)',
-    address: 'Estrada da Gávea, 522 - Rocinha, Rio de Janeiro - RJ, CEP 22451-263',
+    address: 'Estrada da Gávea, 445, Rocinha, Rio de Janeiro - RJ',
     landmarks: 'Curva do S, subindo pela Estrada da Gávea, integrada ao complexo de saúde da Rocinha',
-    hours: 'Segunda a sexta das 07:00 às 18:00 | Sábado das 08:00 às 12:00',
-    phone: '(21) 3322-7933',
+    hours: 'Segunda a sexta das 07:00 às 18:00',
+    phone: '(21) 3322-7395 / (21) 3322-6694',
     servicesOffered: [
       'Estratégia Saúde da Família (ESF)',
       'Sala de Vacinação',
@@ -71,10 +63,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Planejamento Familiar e Distribuição de Métodos Contraceptivos',
       'Tratamento Diretamente Observado para Tuberculose e Hanseníase'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
-    sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-15',
+    dataSource: 'Lista de unidades da SMS-Rio',
+    sourceYear: '2021',
+    sourceUrl: 'https://saude.prefeitura.rio',
+    verificationStatus: 'fonte_oficial_datada',
+    lastUpdated: '2021-12-31',
     coordinates: {
       lat: -22.9885,
       lng: -43.2471,
@@ -85,17 +78,15 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
   {
     id: 'cf-zilda-arns',
     name: 'Clínica da Família Zilda Arns',
-    cnesOfficialName: 'SMS CLINICA DA FAMILIA ZILDA ARNS AP 31',
-    cnesCode: '6867630',
     unitType: 'clinica_familia',
     community: 'Complexo do Alemão',
     neighborhood: 'Ramos / Inhaúma',
     zone: 'Zona Norte',
     healthDistrict: 'AP 3.1 (Leopoldina e Ilha)',
-    address: 'Estrada do Itararé, 951 - Ramos/Complexo do Alemão, Rio de Janeiro - RJ, CEP 21061-700',
+    address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     landmarks: 'Próxima à estação Palmeiras do Teleférico e ao Colégio Estadual',
-    hours: 'Segunda a sexta das 07:00 às 19:00 | Sábado das 08:00 às 12:00',
-    phone: '(21) 3885-9850',
+    hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
+    phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     servicesOffered: [
       'Equipes Multiprofissionais de Saúde da Família (eSF)',
       'Vacinação Infantil, Adolescente e Adulto',
@@ -105,10 +96,10 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Coleta de Exames Preventivos e Testes Rápidos (HIV/Sífilis/Hepatite)',
       'Atendimento Odontológico de Atenção Básica'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
+    dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-10',
+    verificationStatus: 'a_confirmar',
+    lastUpdated: '2026-11-03',
     coordinates: {
       lat: -22.8631,
       lng: -43.2712,
@@ -119,17 +110,15 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
   {
     id: 'cf-herbert-de-souza',
     name: 'Clínica da Família Herbert de Souza (Betinho)',
-    cnesOfficialName: 'SMS CLINICA DA FAMILIA HERBERT DE SOUZA AP 31',
-    cnesCode: '6940877',
     unitType: 'clinica_familia',
     community: 'Complexo da Maré (Vila do João)',
     neighborhood: 'Maré',
     zone: 'Zona Norte',
     healthDistrict: 'AP 3.1 (Maré e Ramos)',
-    address: 'Av. Bento Ribeiro Dantas, s/n - Vila do João, Maré, Rio de Janeiro - RJ, CEP 21044-241',
+    address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     landmarks: 'Na Vila do João, próximo à Linha Amarela e ao CIEP Samora Machel',
-    hours: 'Segunda a sexta das 07:00 às 18:00 | Sábado das 08:00 às 12:00',
-    phone: '(21) 3105-6415',
+    hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
+    phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     servicesOffered: [
       'Consultas Médicas da Atenção Primária',
       'Sala de Curativos e Procedimentos Ambulatoriais',
@@ -139,31 +128,29 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Incentivo e Apoio ao Aleitamento Materno',
       'Acolhimento à Demanda Espontânea'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
+    dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-12',
+    verificationStatus: 'a_confirmar',
+    lastUpdated: '2026-11-03',
     coordinates: {
       lat: -22.8688,
       lng: -43.2359,
     },
     accessibilityFeatures: ['Rampa com corrimão duplo', 'Sanitário adaptado', 'Sinalização com fontes ampliadas'],
-    fieldAuditNotes: 'Área com grande fluxo comunitário. Recomenda-se confirmar horários de mutirões aos sábados presencialmente.'
+    fieldAuditNotes: 'Área com grande fluxo comunitário. Recomenda-se confirmar dados presencialmente ou por telefone oficial.'
   },
   {
     id: 'cf-victor-valla',
     name: 'Clínica da Família Victor Valla',
-    cnesOfficialName: 'SMS CLINICA DA FAMILIA VICTOR VALLA AP 31',
-    cnesCode: '6867657',
     unitType: 'clinica_familia',
     community: 'Manguinhos / Jacarezinho',
     neighborhood: 'Manguinhos',
     zone: 'Zona Norte',
     healthDistrict: 'AP 3.1 (Manguinhos/Bonsucesso)',
-    address: 'Av. Dom Hélder Câmara, 1390 - Manguinhos, Rio de Janeiro - RJ, CEP 20950-003',
+    address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     landmarks: 'Ao lado da estação de trem SuperVia de Manguinhos e próximo ao campus da Fiocruz',
-    hours: 'Segunda a sexta das 07:00 às 19:00 | Sábado das 08:00 às 12:00',
-    phone: '(21) 2209-7600',
+    hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
+    phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     servicesOffered: [
       'Estratégia Saúde da Família (ESF)',
       'Consultas Clínicas e de Enfermagem',
@@ -173,10 +160,10 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Pré-Natal, Puericultura e Saúde da Mulher',
       'Grupos de Controle de Tabagismo e Educação em Saúde'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
+    dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-10',
+    verificationStatus: 'a_confirmar',
+    lastUpdated: '2026-11-03',
     coordinates: {
       lat: -22.8872,
       lng: -43.2498,
@@ -187,17 +174,15 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
   {
     id: 'cf-amelia-dos-santos',
     name: 'Clínica da Família Amélia dos Santos Ferreira',
-    cnesOfficialName: 'SMS CLINICA DA FAMILIA AMELIA DOS SANTOS FERREIRA AP 40',
-    cnesCode: '6867649',
     unitType: 'clinica_familia',
     community: 'Cidade de Deus',
     neighborhood: 'Cidade de Deus',
     zone: 'Zona Oeste',
     healthDistrict: 'AP 4.0 (Jacarepaguá e Barra)',
-    address: 'Rua José de Arimathea, s/n - Cidade de Deus, Rio de Janeiro - RJ, CEP 22773-040',
+    address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     landmarks: 'Próxima ao Centro Esportivo da Cidade de Deus e integrada ao polo de saúde da CDD',
-    hours: 'Segunda a sexta das 07:00 às 18:00 | Sábado das 08:00 às 12:00',
-    phone: '(21) 2445-5381',
+    hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
+    phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     servicesOffered: [
       'Clínica Médica e Atenção Primária',
       'Enfermagem e Imunização',
@@ -207,10 +192,10 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Atendimento Odontológico de Atenção Básica',
       'Visita Domiciliar dos Agentes Comunitários'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
+    dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-12',
+    verificationStatus: 'a_confirmar',
+    lastUpdated: '2026-11-03',
     coordinates: {
       lat: -22.9515,
       lng: -43.3621,
@@ -219,19 +204,17 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     fieldAuditNotes: 'Cobertura em microáreas com alta vulnerabilidade social na Cidade de Deus.'
   },
   {
-    id: 'cms-santa-marta',
-    name: 'Centro Municipal de Saúde Santa Marta',
-    cnesOfficialName: 'SMS CENTRO MUNICIPAL DE SAUDE SANTA MARTA AP 21',
-    cnesCode: '2269384',
-    unitType: 'centro_municipal_saude',
+    id: 'cf-santa-marta',
+    name: 'Clínica da Família Santa Marta',
+    unitType: 'clinica_familia',
     community: 'Santa Marta (Dona Marta)',
     neighborhood: 'Botafogo',
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Botafogo e Adjacências)',
-    address: 'Rua São Clemente, 345 - Botafogo, Rio de Janeiro - RJ, CEP 22260-001',
+    address: 'Rua São Clemente, 312, Botafogo, Rio de Janeiro - RJ',
     landmarks: 'Na base do Morro Dona Marta, próximo à Estação 1 do Plano Inclinado',
     hours: 'Segunda a sexta das 07:00 às 17:00',
-    phone: '(21) 2537-8844',
+    phone: '(21) 2286-2374',
     servicesOffered: [
       'Atenção Primária à Saúde',
       'Vacinação',
@@ -240,31 +223,30 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Consultas Agendadas e Acolhimento Espontâneo',
       'Acompanhamento Territorial por Microáreas'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
-    sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'pendente_conferencia_presencial',
-    lastUpdated: '2026-03-08',
+    dataSource: 'Lista de unidades da SMS-Rio',
+    sourceYear: '2021',
+    sourceUrl: 'https://saude.prefeitura.rio',
+    verificationStatus: 'fonte_oficial_datada',
+    lastUpdated: '2021-12-31',
     coordinates: {
       lat: -22.9542,
       lng: -43.1932,
     },
     accessibilityFeatures: ['Acesso na parte baixa do morro', 'Banheiro acessível'],
-    fieldAuditNotes: 'Telefone e horário de fechamento na sexta-feira necessitam de conferência presencial pelos pesquisadores.'
+    fieldAuditNotes: 'Clínica da Família com base no sopé do Morro Dona Marta.'
   },
   {
     id: 'cf-pavao-cantagalo',
     name: 'Clínica da Família Pavão-Pavãozinho e Cantagalo',
-    cnesOfficialName: 'SMS CLINICA DA FAMILIA PAVAO PAVAOZINHO E CANTAGALO AP 21',
-    cnesCode: '6940893',
     unitType: 'clinica_familia',
     community: 'Pavão-Pavãozinho e Cantagalo',
     neighborhood: 'Copacabana / Ipanema',
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Copacabana/Ipanema)',
-    address: 'Rua Saint Roman, 172 - Copacabana, Rio de Janeiro - RJ, CEP 22071-060',
-    landmarks: 'Subida da Rua Saint Roman pelo corte de Copacabana e Ipanema',
-    hours: 'Segunda a sexta das 07:00 às 18:00 | Sábado das 08:00 às 12:00',
-    phone: '(21) 2523-4581',
+    address: 'Ladeira Saint Roman, 172, Copacabana, Rio de Janeiro - RJ',
+    landmarks: 'Subida da Ladeira Saint Roman pelo corte entre Copacabana e Ipanema',
+    hours: 'Segunda a sexta das 07:00 às 18:00',
+    phone: '(21) 2523-4127 / (21) 2513-1549',
     servicesOffered: [
       'Equipes Multiprofissionais de Saúde',
       'Vacinas de Calendário Nacional',
@@ -273,10 +255,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Curativos e Injeções',
       'Acompanhamento Pediátrico'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
-    sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-14',
+    dataSource: 'Lista de unidades da SMS-Rio',
+    sourceYear: '2021',
+    sourceUrl: 'https://saude.prefeitura.rio',
+    verificationStatus: 'fonte_oficial_datada',
+    lastUpdated: '2021-12-31',
     coordinates: {
       lat: -22.9818,
       lng: -43.1965,
@@ -287,17 +270,15 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
   {
     id: 'cms-chapeu-mangueira',
     name: 'Centro Municipal de Saúde Babilônia e Chapéu Mangueira',
-    cnesOfficialName: 'SMS CENTRO MUNICIPAL DE SAUDE BABILONIA E CHAPEU MANGUEIRA AP 21',
-    cnesCode: '2269406',
     unitType: 'centro_municipal_saude',
     community: 'Chapéu Mangueira e Babilônia',
     neighborhood: 'Leme',
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Leme/Copacabana)',
-    address: 'Ladeira Ary Barroso, 66 - Leme, Rio de Janeiro - RJ, CEP 22010-060',
+    address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     landmarks: 'Na subida da Ladeira Ary Barroso, início da ladeira de acesso às duas comunidades',
-    hours: 'Segunda a sexta das 08:00 às 17:00',
-    phone: '(21) 2275-8422',
+    hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
+    phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     servicesOffered: [
       'Atenção Básica e ESF',
       'Vacinação',
@@ -306,31 +287,29 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Saúde da Mulher e Preventivo',
       'Controle de Hipertensão e Diabetes'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
+    dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'pendente_conferencia_presencial',
-    lastUpdated: '2026-03-05',
+    verificationStatus: 'a_confirmar',
+    lastUpdated: '2026-11-03',
     coordinates: {
       lat: -22.9621,
       lng: -43.1704,
     },
     accessibilityFeatures: ['Rampa com corrimão', 'Sanitário adaptado'],
-    fieldAuditNotes: 'Acesso por ladeira íngreme; requer conferência da disponibilidade de transporte comunitário ou facilidades de mobilidade.'
+    fieldAuditNotes: 'Acesso por ladeira íngreme; dados de contato e horário devem ser confirmados nos canais oficiais.'
   },
   {
     id: 'upa-manguinhos-24h',
     name: 'UPA 24h Manguinhos (Emergência e Urgência)',
-    cnesOfficialName: 'SMS UPA 24H MANGUINHOS AP 31',
-    cnesCode: '6185203',
     unitType: 'upa_emergencia',
     community: 'Manguinhos / Jacarezinho / Bonsucesso',
     neighborhood: 'Manguinhos',
     zone: 'Zona Norte',
     healthDistrict: 'AP 3.1 (Urgência e Emergência)',
-    address: 'Av. Dom Hélder Câmara, 1390 (Anexo) - Manguinhos, Rio de Janeiro - RJ, CEP 20950-003',
+    address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     landmarks: 'Ao lado da Clínica da Família Victor Valla e da estação de Manguinhos',
-    hours: 'Aberto 24 horas por dia, todos os dias (Inclusive domingos e feriados)',
-    phone: '(21) 2332-9070',
+    hours: 'Funciona 24 horas',
+    phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     servicesOffered: [
       'Atendimento de Urgência e Emergência Adulto e Pediátrico 24h',
       'Estabilização de Pacientes Críticos',
@@ -339,10 +318,10 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Medicação Injetável e Inalação de Urgência',
       'Transferência Regulada via SAMU para Hospitais'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ (Unidade de Pronto Atendimento)',
+    dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-15',
+    verificationStatus: 'a_confirmar',
+    lastUpdated: '2026-11-03',
     coordinates: {
       lat: -22.8870,
       lng: -43.2495,
@@ -353,17 +332,15 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
   {
     id: 'upa-rocinha-24h',
     name: 'UPA 24h Rocinha (Emergência e Urgência)',
-    cnesOfficialName: 'SMS UPA 24H ROCINHA AP 21',
-    cnesCode: '6867665',
     unitType: 'upa_emergencia',
     community: 'Rocinha',
     neighborhood: 'São Conrado',
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Urgência e Emergência)',
-    address: 'Estrada da Gávea, 522 (Térreo) - Rocinha, Rio de Janeiro - RJ, CEP 22451-263',
+    address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     landmarks: 'Curva do S, pavimento térreo do complexo de saúde da Rocinha',
-    hours: 'Aberto 24 horas por dia, todos os dias',
-    phone: '(21) 2332-2374',
+    hours: 'Funciona 24 horas',
+    phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     servicesOffered: [
       'Pronto Atendimento Clínico e Pediátrico de Emergência 24h',
       'Leitos de Observação e Estabilização',
@@ -371,15 +348,15 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
       'Suturas e Curativos de Trauma Agudo',
       'Suporte para Crises Respiratórias Agudas'
     ],
-    dataSource: 'CNES/DATASUS / SMS-RJ',
+    dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'verificada_cnes',
-    lastUpdated: '2026-03-15',
+    verificationStatus: 'a_confirmar',
+    lastUpdated: '2026-11-03',
     coordinates: {
       lat: -22.9886,
       lng: -43.2472,
     },
     accessibilityFeatures: ['Rampa de macas e cadeiras de rodas', 'Portas automáticas', 'Banheiro adaptado 24h'],
-    fieldAuditNotes: 'Porta de entrada de urgência 24h de referência para toda a Rocinha e São Conrado.'
+    fieldAuditNotes: 'Porta de entrada de urgência 24h de referência para a região.'
   }
 ];

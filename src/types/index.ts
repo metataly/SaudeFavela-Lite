@@ -12,15 +12,12 @@ export type UnitType =
 export type ZoneRJ = 'Zona Sul' | 'Zona Norte' | 'Zona Oeste' | 'Centro';
 
 export type UnitVerificationStatus = 
-  | 'verificada_cnes'               // Dados cadastrais confirmados no CNES / SMS-RJ
-  | 'pendente_conferencia_presencial' // Unidade real com CNES, mas horário/telefone requerem confirmação no território
-  | 'demonstrativa';                // Registro fictício para treinamento
+  | 'fonte_oficial_datada'
+  | 'a_confirmar';
 
 export interface HealthUnit {
   id: string;
   name: string;
-  cnesOfficialName: string; // Nome oficial no CNES
-  cnesCode: string;         // Código de 7 dígitos no Cadastro Nacional de Estabelecimentos de Saúde
   unitType: UnitType;
   community: string;        // Ex: "Rocinha", "Complexo da Maré", "Alemão", "Cidade de Deus"
   neighborhood: string;
@@ -32,6 +29,7 @@ export interface HealthUnit {
   phone: string;
   servicesOffered: string[];
   dataSource: string;
+  sourceYear?: string;
   sourceUrl: string;        // Link de referência pública
   verificationStatus: UnitVerificationStatus;
   lastUpdated: string;
@@ -70,7 +68,7 @@ export interface GuidanceTopic {
   communityTips: string[];
   susRightsNote: string;
   legalBasis: string;               // Base jurídica/normativa (Portarias, Leis)
-  lastVerifiedDate: string;
+  lastReviewedDate: string;
   isUrgent?: boolean;
   emergencyAction?: {
     label: string;
@@ -132,8 +130,7 @@ export interface MeasuredPerformanceData {
 }
 
 export interface TelemetryReport {
-  networkRequestsCount: number;
-  estimatedBytesTransferred: number;
+  localWritesCount: number;
   offlineCacheStatus: 'ativo' | 'parcial' | 'indisponivel';
   cachedUnitsCount: number;
   savedAppointmentsCount: number;

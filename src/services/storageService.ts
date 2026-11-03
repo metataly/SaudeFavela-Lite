@@ -1,11 +1,10 @@
-import { AccessibilitySettings, DemoAppointment, HealthUnit, TelemetryReport } from '../types';
+import { AccessibilitySettings, DemoAppointment, TelemetryReport } from '../types';
 import { HEALTH_UNITS_DATA } from '../data/healthUnitsData';
 
 const SETTINGS_KEY = 'saudefavela_accessibility_v1';
 const SAVED_UNITS_KEY = 'saudefavela_saved_units_v1';
 const DEMO_APPOINTMENTS_KEY = 'saudefavela_demo_appointments_v1';
 const TELEMETRY_KEY = 'saudefavela_telemetry_v1';
-const OFFLINE_UNITS_CACHE_KEY = 'saudefavela_offline_units_v1';
 
 export const DEFAULT_SETTINGS: AccessibilitySettings = {
   fontSize: 'normal',
@@ -30,24 +29,9 @@ export function getStoredSettings(): AccessibilitySettings {
 export function saveSettings(settings: AccessibilitySettings): void {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-    recordTelemetryAction(250); // ~250 bytes escritos
+    recordLocalWriteAction();
   } catch (err) {
     console.warn('Erro ao salvar preferências:', err);
-  }
-}
-
-// Inicializa o cache offline de unidades
-export function initOfflineUnitsCache(): HealthUnit[] {
-  try {
-    const cached = localStorage.getItem(OFFLINE_UNITS_CACHE_KEY);
-    if (cached) {
-      return JSON.parse(cached);
-    }
-    // Salva o dataset localmente para garantir acesso 100% offline
-    localStorage.setItem(OFFLINE_UNITS_CACHE_KEY, JSON.stringify(HEALTH_UNITS_DATA));
-    return HEALTH_UNITS_DATA;
-  } catch {
-    return HEALTH_UNITS_DATA;
   }
 }
 
@@ -74,7 +58,7 @@ export function toggleSaveUnit(unitId: string): boolean {
       isSavedNow = true;
     }
     localStorage.setItem(SAVED_UNITS_KEY, JSON.stringify(saved));
-    recordTelemetryAction(80);
+    recordLocalWriteAction();
     return isSavedNow;
   } catch {
     return false;
@@ -96,7 +80,7 @@ export function saveDemoAppointment(appointment: DemoAppointment): void {
     const existing = getDemoAppointments();
     const updated = [appointment, ...existing];
     localStorage.setItem(DEMO_APPOINTMENTS_KEY, JSON.stringify(updated));
-    recordTelemetryAction(600); // registro salvo localmente
+    recordLocalWriteAction();
   } catch (err) {
     console.error('Erro ao salvar agendamento demonstrativo local:', err);
   }
@@ -107,31 +91,29 @@ export function deleteDemoAppointment(id: string): void {
     const existing = getDemoAppointments();
     const filtered = existing.filter(a => a.id !== id);
     localStorage.setItem(DEMO_APPOINTMENTS_KEY, JSON.stringify(filtered));
+    recordLocalWriteAction();
   } catch (err) {
     console.error('Erro ao deletar agendamento local:', err);
   }
 }
 
-// Telemetria técnica (baixo consumo e sem rastreadores externos)
+// Telemetria técnica (contagem real de gravações locais)
 export function getTelemetryData(): TelemetryReport {
   try {
     const raw = localStorage.getItem(TELEMETRY_KEY);
     const parsed = raw ? JSON.parse(raw) : {};
     const appointments = getDemoAppointments();
-    const units = initOfflineUnitsCache();
 
     return {
-      networkRequestsCount: parsed.networkRequestsCount || 0,
-      estimatedBytesTransferred: parsed.estimatedBytesTransferred || 0,
+      localWritesCount: typeof parsed.localWritesCount === 'number' ? parsed.localWritesCount : 0,
       offlineCacheStatus: 'ativo',
-      cachedUnitsCount: units.length,
+      cachedUnitsCount: HEALTH_UNITS_DATA.length,
       savedAppointmentsCount: appointments.length,
       lastSyncDate: parsed.lastSyncDate || new Date().toISOString().split('T')[0],
     };
   } catch {
     return {
-      networkRequestsCount: 0,
-      estimatedBytesTransferred: 0,
+      localWritesCount: 0,
       offlineCacheStatus: 'ativo',
       cachedUnitsCount: HEALTH_UNITS_DATA.length,
       savedAppointmentsCount: 0,
@@ -140,12 +122,11 @@ export function getTelemetryData(): TelemetryReport {
   }
 }
 
-export function recordTelemetryAction(approxBytes: number = 200): void {
+export function recordLocalWriteAction(): void {
   try {
     const current = getTelemetryData();
     const updated = {
-      networkRequestsCount: current.networkRequestsCount + 1,
-      estimatedBytesTransferred: current.estimatedBytesTransferred + approxBytes,
+      localWritesCount: current.localWritesCount + 1,
       lastSyncDate: new Date().toISOString(),
     };
     localStorage.setItem(TELEMETRY_KEY, JSON.stringify(updated));
@@ -161,7 +142,6 @@ export function clearAllLocalData(): void {
     localStorage.removeItem(SAVED_UNITS_KEY);
     localStorage.removeItem(DEMO_APPOINTMENTS_KEY);
     localStorage.removeItem(TELEMETRY_KEY);
-    localStorage.removeItem(OFFLINE_UNITS_CACHE_KEY);
   } catch (err) {
     console.error('Erro ao limpar dados:', err);
   }

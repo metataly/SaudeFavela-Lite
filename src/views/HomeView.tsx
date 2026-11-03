@@ -12,7 +12,6 @@ import {
   HeartHandshake
 } from 'lucide-react';
 import { AppTab } from '../components/BottomNavBar';
-import heroImage from '../assets/images/saude_comunitaria_rj_1792522568279.jpg';
 
 interface HomeViewProps {
   onNavigate: (tab: AppTab) => void;
@@ -45,7 +44,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-sky-700 shrink-0" aria-hidden="true" />
           <span>
-            <strong>Protótipo Comunitário Independente:</strong> Orientação simplificada para o SUS no Rio de Janeiro.
+            <strong>Protótipo Comunitário Independente:</strong> Orientação simplificada para a Atenção Primária no Rio de Janeiro.
           </span>
         </div>
         <button
@@ -56,37 +55,26 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </button>
       </div>
 
-      {/* Hero com Fotografia Autêntica Comunitária */}
-      <section className="relative rounded-3xl overflow-hidden shadow-sm border border-slate-200 bg-slate-900 text-white">
-        <div className="relative h-48 sm:h-56 w-full overflow-hidden">
-          <img
-            src={heroImage}
-            alt="Agente Comunitária de Saúde orientando moradora com carinho em Clínica da Família no Rio de Janeiro"
-            className="w-full h-full object-cover object-center opacity-75"
-            loading="eager"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
-          
-          <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
-            <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 mb-1">
-              <HeartHandshake className="w-4 h-4" />
-              <span>Saúde Pública ao Alcance de Todos</span>
-            </div>
-            <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
-              Acesso fácil à sua Clínica da Família no Rio
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-200 mt-1 max-w-xl font-normal leading-relaxed">
-              Tire dúvidas sobre consultas, vacinas e documentos sem gastar seus créditos de internet móvel.
-            </p>
+      {/* Hero com Gradiente e Padrão Visual Acolhedor */}
+      <section className="relative rounded-3xl overflow-hidden shadow-sm border border-slate-200 bg-linear-to-br from-sky-900 via-slate-900 to-emerald-950 text-white">
+        <div className="relative p-6 sm:p-8">
+          <div className="flex items-center gap-2 text-xs font-semibold text-emerald-400 mb-2">
+            <HeartHandshake className="w-4 h-4" />
+            <span>Saúde Pública ao Alcance de Todos</span>
           </div>
+          <h1 className="text-xl sm:text-2xl font-black tracking-tight text-white leading-tight">
+            Acesso fácil à sua Clínica da Família no Rio
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-200 mt-2 max-w-xl font-normal leading-relaxed">
+            Orientações sobre consultas, vacinas e documentos com funcionamento offline e sem exigência de cadastro.
+          </p>
         </div>
 
-        {/* Barra Rápida de Benefícios Offline & Baixo Consumo */}
-        <div className="bg-slate-950/90 px-5 py-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-300">
+        {/* Barra Rápida de Benefícios Offline */}
+        <div className="bg-slate-950/80 px-5 py-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-300">
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>100% gratuito · Sem cadastro · Funciona offline</span>
+            <span>100% gratuito · Sem cadastro · Arquivos salvos no celular</span>
           </div>
           <button
             onClick={handleReadHome}

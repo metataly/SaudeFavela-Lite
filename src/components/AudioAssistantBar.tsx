@@ -1,21 +1,17 @@
 import React from 'react';
-import { Volume2, Square, Pause, Play } from 'lucide-react';
-import { stopSpeaking, pauseSpeaking, resumeSpeaking } from '../services/speechService';
+import { Volume2, Square } from 'lucide-react';
+import { stopSpeaking } from '../services/speechService';
 
 interface AudioAssistantBarProps {
   isSpeaking: boolean;
-  isPaused: boolean;
   currentText: string;
   onStop: () => void;
-  onTogglePause: () => void;
 }
 
 export const AudioAssistantBar: React.FC<AudioAssistantBarProps> = ({
   isSpeaking,
-  isPaused,
   currentText,
   onStop,
-  onTogglePause,
 }) => {
   if (!isSpeaking) return null;
 
@@ -31,7 +27,7 @@ export const AudioAssistantBar: React.FC<AudioAssistantBarProps> = ({
           </div>
           <div className="overflow-hidden">
             <div className="text-[11px] font-semibold text-sky-300 uppercase tracking-wider">
-              {isPaused ? 'Leitura em Pausa' : 'Lendo em voz alta (pt-BR)'}
+              Lendo em voz alta (pt-BR)
             </div>
             <p className="text-xs text-slate-300 truncate font-normal">
               {currentText || 'Texto da tela'}
@@ -42,28 +38,14 @@ export const AudioAssistantBar: React.FC<AudioAssistantBarProps> = ({
         <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={() => {
-              if (isPaused) {
-                resumeSpeaking();
-              } else {
-                pauseSpeaking();
-              }
-              onTogglePause();
-            }}
-            aria-label={isPaused ? 'Retomar leitura' : 'Pausar leitura'}
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center bg-slate-800 hover:bg-slate-700 rounded-xl text-slate-200 transition"
-          >
-            {isPaused ? <Play className="w-4 h-4" /> : <Pause className="w-4 h-4" />}
-          </button>
-
-          <button
-            onClick={() => {
               stopSpeaking();
               onStop();
             }}
             aria-label="Parar leitura em voz alta"
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center bg-rose-600/80 hover:bg-rose-600 rounded-xl text-white transition"
+            className="min-h-[44px] px-3.5 flex items-center justify-center gap-1.5 bg-rose-600/90 hover:bg-rose-600 rounded-xl text-white font-medium text-xs transition"
           >
             <Square className="w-4 h-4" />
+            <span>Parar</span>
           </button>
         </div>
       </div>

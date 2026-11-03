@@ -17,6 +17,7 @@ export default defineConfig(() => {
           name: 'SaúdeFavela-Lite',
           short_name: 'SaúdeFavela',
           description: 'Guia comunitário acessível e offline para orientação em saúde da Atenção Primária (SUS) no Rio de Janeiro.',
+          lang: 'pt-BR',
           theme_color: '#0284c7',
           background_color: '#f8fafc',
           display: 'standalone',
@@ -47,7 +48,7 @@ export default defineConfig(() => {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,jpg}'],
         },
         devOptions: {
-          enabled: true,
+          enabled: false,
           type: 'module',
         },
       }),

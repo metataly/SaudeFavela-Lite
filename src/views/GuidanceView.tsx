@@ -335,14 +335,14 @@ export const GuidanceView: React.FC<GuidanceViewProps> = ({ onSpeak }) => {
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-200/80 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
+                    <div className="pt-2 border-t border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-500">
                       <span className="flex items-center gap-1 font-mono text-[10px]">
                         <Scale className="w-3.5 h-3.5 text-slate-400" />
                         {topic.legalBasis}
                       </span>
-                      <span className="flex items-center gap-1 text-[10px]">
-                        <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                        Auditado em {topic.lastVerifiedDate}
+                      <span className="flex items-center gap-1 text-[11px] text-slate-600 font-medium">
+                        <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                        Texto revisado em 03/11/2026. Não substitui orientação de profissional de saúde.
                       </span>
                     </div>
                   </div>

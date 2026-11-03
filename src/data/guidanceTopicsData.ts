@@ -2,13 +2,14 @@ import { GuidanceTopic } from '../types';
 
 /**
  * Catálogo de Orientações da Atenção Primária à Saúde (SUS)
- * Auditado segundo a legislação sanitária brasileira:
+ * Base normativa sanitária brasileira:
  * - Constituição Federal de 1988 (Art. 196 a 200 - Seguridade Social e Saúde)
  * - Lei Federal nº 8.080/1990 (Lei Orgânica da Saúde - Princípios da Universalidade e Igualdade)
- * - Portaria MS nº 940/2011 (Regulamenta o CNS - Art. 18: Vedada a recusa de atendimento)
- * - Portaria de Consolidação GM/MS nº 2/2017 (Anexo XXII - Política Nacional de Atenção Básica / PNAB)
+ * - Portaria MS nº 940/2011 (Art. 13 - Cartão Nacional de Saúde)
+ * - Portaria de Consolidação GM/MS nº 2/2017 (Anexo XXII - PNAB)
+ * - Portarias GM/MS nº 5.349 e 5.350/2024 (Rede Alyne)
  * - Lei Federal nº 11.108/2005 (Lei do Acompanhante no Parto)
- * - Resoluções SMS-RJ sobre Territorialização e Acolhimento à Demanda Espontânea
+ * - Portaria GM/MS nº 1.863/2003 (Atenção às Urgências) e Código Penal, Art. 135
  */
 export const GUIDANCE_TOPICS_DATA: GuidanceTopic[] = [
   {
@@ -20,7 +21,7 @@ export const GUIDANCE_TOPICS_DATA: GuidanceTopic[] = [
     whatToBring: [
       'Documento de identificação com foto (RG, CNH, Carteira de Trabalho) ou Certidão de Nascimento para crianças.',
       'Cartão do SUS (físico ou no app Meu SUS Digital). Se não tiver em mãos, a equipe localiza pelo seu CPF.',
-      'Comprovante de residência simples ou declaração comunitária (para vincular à equipe da sua rua).'
+      'Comprovante de residência simples ou declaração (para vincular à equipe da sua rua).'
     ],
     stepsToFollow: [
       'Identifique a Clínica da Família que atende sua rua ou travessa (território de cobertura).',
@@ -30,36 +31,36 @@ export const GUIDANCE_TOPICS_DATA: GuidanceTopic[] = [
     ],
     communityTips: [
       'Descubra quem é o Agente Comunitário de Saúde (ACS) que visita sua rua: ele conhece a rotina da equipe médica e pode intermediar orientações de acolhimento.',
-      'Para quem tem jornada de trabalho rígida, consulte os horários de início da manhã (a partir das 07:00) ou o atendimento de sábado pela manhã.'
+      'Para quem tem jornada de trabalho rígida, consulte com antecedência os horários de início de acolhimento da unidade.'
     ],
-    susRightsNote: 'O acolhimento é diretriz prioritária da PNAB (Portaria GM/MS nº 2/2017). Nenhuma pessoa que procure uma unidade de saúde com queixa de sofrimento ou sintoma pode ser dispensada sem avaliação de acolhimento.',
+    susRightsNote: 'O acolhimento é diretriz da PNAB (Portaria GM/MS nº 2/2017). Nenhuma pessoa que procure uma unidade de saúde com queixa de sofrimento ou sintoma pode ser dispensada sem avaliação de acolhimento.',
     legalBasis: 'Portaria de Consolidação GM/MS nº 2/2017, Anexo XXII (PNAB) e Lei 8.080/1990, Art. 7º.',
-    lastVerifiedDate: '2026-03-15'
+    lastReviewedDate: '2026-11-03'
   },
   {
     id: 'sem-comprovante',
     title: 'Não tenho conta de luz ou água no meu nome: posso ser atendido?',
     category: 'documentos',
     informationLevel: 'direito_universal',
-    shortSummary: 'SIM! A legislação federal e a Constituição proíbem recusar atendimento por falta de comprovante comercial.',
+    shortSummary: 'SIM! A universalidade do SUS garante acolhimento mesmo sem comprovante comercial em seu nome.',
     whatToBring: [
       'Qualquer documento de identificação com foto ou número de CPF.',
-      'Se houver: comprovante da casa de quem você mora (parente, aluguel, vizinho) ou uma declaração escrita de próprio punho informando onde reside.',
-      'Atestado da Associação de Moradores do morro ou comunidade (opcional, mas aceito como referência de vínculo).'
+      'Se houver: comprovante da casa onde você mora (parente, aluguel, vizinho) ou uma declaração escrita de próprio punho informando onde reside.',
+      'Atestado da Associação de Moradores do morro ou comunidade (opcional).'
     ],
     stepsToFollow: [
-      'Informe no balcão que você reside no território, mas não possui conta comercial de concessionária (Light, Cedae/Águas do Rio) em seu nome.',
-      'A equipe preenche a autodeclaração de residência e o cadastro de primeiro acolhimento imediatamente.',
-      'Um Agente Comunitário de Saúde (ACS) fará uma visita domiciliar posterior para validar a microárea de cobertura e cadastrar toda a família no sistema e-SUS APS.',
-      'O acolhimento e a assistência ocorrem no mesmo dia, sem que a falta do papel comercial funcione como barreira.'
+      'Informe no balcão que você reside no território, mas não possui conta de luz ou de água em seu nome.',
+      'A equipe preenche a autodeclaração de residência e o cadastro de acolhimento.',
+      'Um Agente Comunitário de Saúde (ACS) fará uma visita domiciliar posterior para validar a microárea de cobertura e cadastrar a família no sistema e-SUS APS.',
+      'O acolhimento e a assistência inicial ocorrem no posto, sem que a falta de conta de concessionária seja impedimento de acesso.'
     ],
     communityTips: [
-      'Nas comunidades cariocas com ocupação histórica ou moradias multifamiliares, a autodeclaração é rotina padrão reconhecida pela SMS-RJ.',
-      'Caso algum funcionário da recepção hesite, peça gentilmente para conversar com o enfermeiro ou gerente responsável pelo acolhimento.'
+      'Nas comunidades com moradias multifamiliares ou ocupações, a autodeclaração auxilia no vínculo territorial; confirme na unidade como ela organiza o acolhimento de novos moradores.',
+      'Caso algum funcionário da recepção hesite, peça gentilmente para conversar com o enfermeiro ou responsável pelo acolhimento.'
     ],
-    susRightsNote: 'O Artigo 18 da Portaria MS nº 940/2011 determina explicitamente: "A ausência do Cartão Nacional de Saúde ou de comprovante de residência não impedirá o atendimento ao cidadão em qualquer unidade do SUS". O Art. 196 da CF/88 consagra a saúde como direito universal de todos e dever do Estado.',
-    legalBasis: 'Constituição Federal de 1988, Art. 196; Portaria Ministério da Saúde nº 940/2011, Art. 18; Lei nº 8.080/1990, Art. 2º.',
-    lastVerifiedDate: '2026-03-15'
+    susRightsNote: 'A saúde é direito de todos e dever do Estado (CF/88, Art. 196). O acesso às ações e serviços de saúde é universal e igualitário (Lei 8.080/1990, Art. 7º). A identificação no SUS por meio do Cartão Nacional de Saúde (CNS) visa a integração de registros, sem prejuízo do direito ao atendimento (Portaria MS nº 940/2011, Art. 13).',
+    legalBasis: 'Constituição Federal de 1988, Art. 196; Lei nº 8.080/1990, Art. 7º; Portaria MS nº 940/2011, Art. 13.',
+    lastReviewedDate: '2026-11-03'
   },
   {
     id: 'vacinacao-rotina',
@@ -73,18 +74,18 @@ export const GUIDANCE_TOPICS_DATA: GuidanceTopic[] = [
       'Número do CPF ou Cartão do SUS.'
     ],
     stepsToFollow: [
-      'Dirija-se diretamente à Sala de Vacinas da Clínica da Família.',
+      'Dirija-se à Sala de Vacinas da Clínica da Família.',
       'A equipe de enfermagem confere as doses aplicadas e calcula os prazos das vacinas atrasadas ou da época.',
       'A vacina é aplicada com seringas e agulhas descartáveis homologadas.',
       'A dose é registrada no sistema informatizado nacional de imunizações e anotada na caderneta física.'
     ],
     communityTips: [
-      'Se você perdeu o livrinho físico antigo de vacinas, não deixe de ir: a unidade consegue consultar as doses aplicadas pelo seu CPF no sistema nacional e emitir uma nova caderneta.',
-      'Aos sábados, as salas de vacina costumam funcionar das 08:00 às 12:00, ideal para quem trabalha durante a semana.'
+      'Se você perdeu o livrinho físico antigo de vacinas, não deixe de ir: a unidade pode consultar as doses aplicadas pelo seu CPF no sistema nacional e emitir nova caderneta.',
+      'Os horários de aplicação variam por unidade e devem ser confirmados antes de ir.'
     ],
-    susRightsNote: 'O Programa Nacional de Imunizações (PNI) é política de Estado regulamentada pela Lei nº 6.259/1975. A vacinação nas unidades públicas é universal e gratuita para todos os cidadãos residentes no território nacional.',
+    susRightsNote: 'O Programa Nacional de Imunizações (PNI) é política pública de Estado regulamentada pela Lei nº 6.259/1975. A vacinação nas unidades públicas é universal e gratuita para todos os cidadãos no território nacional.',
     legalBasis: 'Lei Federal nº 6.259/1975 e Calendário Nacional de Vacinação do Ministério da Saúde.',
-    lastVerifiedDate: '2026-03-12'
+    lastReviewedDate: '2026-11-03'
   },
   {
     id: 'remedios-farmacia',
@@ -100,41 +101,41 @@ export const GUIDANCE_TOPICS_DATA: GuidanceTopic[] = [
     stepsToFollow: [
       'Apresente a receita no balcão da farmácia da própria Clínica da Família.',
       'O atendente ou farmacêutico confere o prazo da prescrição (remédios controlados possuem validade mais curta).',
-      'O medicamento é conferido e entregue com explicação detalhada dos horários e modo de tomar.',
-      'Caso o medicamento prescrito esteja temporariamente desabastecido na unidade, solicite carimbo de indisponibilidade ou orientação sobre qual unidade polo da AP possui estoque.'
+      'O medicamento é conferido e entregue com explicação dos horários e posologia.',
+      'Caso o medicamento prescrito esteja temporariamente em falta na unidade, solicite carimbo de indisponibilidade ou orientação sobre qual unidade polo da AP possui estoque.'
     ],
     communityTips: [
-      'Medicamentos básicos para hipertensão arterial e diabetes também podem ser retirados sem custo em drogarias privadas conveniadas ao programa Farmácia Popular usando seu CPF e receita médica.',
-      'Avise a equipe médica quando a medicação contínua estiver com menos de 10 comprimidos para providenciar a renovação da receita com tempo hábil.'
+      'Consulte no site do Ministério da Saúde quais medicamentos estão disponíveis pelo programa Farmácia Popular em farmácias conveniadas, portando receita médica e CPF.',
+      'Avise a equipe médica quando a medicação contínua estiver acabando para providenciar a renovação da receita com tempo hábil.'
     ],
-    susRightsNote: 'A assistência farmacêutica é parte integrante da Seguridade Social no SUS (Lei 8.080/1990, Art. 6º, I, "d"). O fornecimento de medicamentos da Relação Nacional de Medicamentos Essenciais (RENAME) é dever do poder público.',
+    susRightsNote: 'A assistência farmacêutica é parte integrante da Seguridade Social no SUS (Lei 8.080/1990, Art. 6º, I, "d"). O fornecimento de medicamentos da Relação Nacional de Medicamentos Essenciais (RENAME) é atribuição do SUS.',
     legalBasis: 'Lei nº 8.080/1990, Art. 6º; Relação Nacional de Medicamentos Essenciais (RENAME / Ministério da Saúde).',
-    lastVerifiedDate: '2026-03-14'
+    lastReviewedDate: '2026-11-03'
   },
   {
     id: 'pre-natal-gestante',
     title: 'Início do Pré-Natal e cuidados com a gestante',
     category: 'pre_natal',
     informationLevel: 'especifico_municipal_rj',
-    shortSummary: 'Acompanhamento seguro da gravidez com a equipe de Saúde da Família e Programa Cegonha Carioca.',
+    shortSummary: 'Acompanhamento seguro da gravidez com a equipe de Saúde da Família e Rede Alyne.',
     whatToBring: [
       'Documento oficial de identificação.',
       'Cartão do SUS ou CPF.',
-      'Resultado de teste de gravidez (se já tiver feito) ou solicitação direta de teste rápido na própria unidade.'
+      'Resultado de teste de gravidez (se já tiver feito) ou realização de teste rápido na própria unidade.'
     ],
     stepsToFollow: [
       'Ao suspeitar de gestação, procure a Clínica da Família mais próxima para realização do teste rápido confirmatório.',
-      'Inicia-se o cadastro no Pré-Natal e no programa municipal Cegonha Carioca.',
-      'A gestante recebe a Caderneta da Gestante, realiza a primeira consulta (médica ou de enfermagem) e solicita exames laboratoriais do primeiro trimestre.',
-      'A gestante conhece com antecedência a maternidade pública de referência para o parto de acordo com sua área territorial.'
+      'Inicia-se o cadastro no Pré-Natal e o acompanhamento vinculado à Rede Alyne e programas locais.',
+      'A gestante recebe a Caderneta da Gestante, realiza a consulta inicial e solicita os exames do primeiro trimestre.',
+      'A gestante é orientada sobre a maternidade de referência para o parto de acordo com o território.'
     ],
     communityTips: [
-      'No município do Rio, o Programa Cegonha Carioca disponibiliza transporte especial (ambulância exclusiva) para a gestante em trabalho de parto chegar à maternidade de referência.',
+      'Pergunte na unidade de saúde sobre o transporte para o parto previsto no Cegonha Carioca no município do Rio.',
       'Incentiva-se a realização do Pré-Natal do Parceiro, com exames e acolhimento para a paternidade ativa.'
     ],
-    susRightsNote: 'A Lei Federal nº 11.108/2005 (Lei do Acompanhante) garante à gestante o direito de indicar um(a) acompanhante de sua livre escolha durante todo o trabalho de parto, parto e pós-parto imediato. Nenhuma maternidade do SUS pode proibir esse direito.',
-    legalBasis: 'Lei Federal nº 11.108/2005; Portaria GM/MS nº 1.459/2011 (Rede Cegonha); Programa Cegonha Carioca (SMS-RJ).',
-    lastVerifiedDate: '2026-03-10'
+    susRightsNote: 'A Lei Federal nº 11.108/2005 (Lei do Acompanhante) garante à gestante o direito de indicar acompanhante de sua livre escolha durante todo o trabalho de parto, parto e pós-parto imediato. Nenhuma maternidade pode proibir esse direito.',
+    legalBasis: 'Lei Federal nº 11.108/2005; Portarias GM/MS nº 5.349 e 5.350/2024 (Rede Alyne, que substituiu a Rede Cegonha); Programa Cegonha Carioca (SMS-RJ).',
+    lastReviewedDate: '2026-11-03'
   },
   {
     id: 'quando-ir-upa-urgencia',
@@ -144,23 +145,23 @@ export const GUIDANCE_TOPICS_DATA: GuidanceTopic[] = [
     isUrgent: true,
     shortSummary: 'Reconheça os sinais de alerta de emergência médica que exigem atendimento imediato.',
     whatToBring: [
-      'Em situações com risco imediato de morte, NUNCA atrase o socorro buscando papéis: vá direto à emergência ou ligue 192.'
+      'Em situações com risco imediato à vida, nunca atrase o socorro buscando documentos: vá direto à emergência ou ligue 192.'
     ],
     stepsToFollow: [
-      'CLÍNICA DA FAMÍLIA (Atenção Básica): Dores crônicas leves, controle de diabetes e pressão, renovação de receitas, vacinação, pré-natal, febre baixa recente sem outros sintomas.',
-      'UPA 24H (Pronto Atendimento): Febre alta persistente que não baixa com remédio, falta de ar moderada a forte, cortes profundos que precisam de sutura, suspeita de fratura óssea, dor abdominal aguda intolerável.',
-      'LIGAR 192 (SAMU) OU 193 (BOMBEIROS): Dor intensa e súbita no peito com aperto ou queimação irradiando para o braço/pescoço, perda súbita de consciência, convulsão, sinais de AVC (boca torta, dificuldade para falar ou levantar um braço).'
+      'CLÍNICA DA FAMÍLIA (Atenção Básica): Acompanhamento rotineiro, dores leves, controle de diabetes e pressão, renovação de receitas, vacinação, pré-natal, febre baixa recente.',
+      'UPA 24H (Pronto Atendimento): Febre alta persistente, falta de ar moderada a forte, cortes profundos que precisam de sutura, suspeita de fratura, dor abdominal aguda intensa.',
+      'LIGAR 192 (SAMU) OU 193 (BOMBEIROS): Dor intensa no peito com aperto ou queimação, perda de consciência, convulsão, sinais de AVC (boca torta, dificuldade para falar ou perda de força no braço). Na dúvida, ligue 192 para orientação médica imediata.'
     ],
     emergencyAction: {
       label: 'Ligar para SAMU Emergência (192)',
       phone: '192'
     },
     communityTips: [
-      'Nas comunidades do Rio, o SAMU possui protocolos de socorro integrado. Em caso de restrição momentânea de acesso, as UPAs 24h de Manguinhos, Rocinha e Cidade de Deus operam em regime ininterrupto.',
-      'Mantenha sempre os números 192 (SAMU) e 193 (Bombeiros) salvos na discagem rápida do celular dos familiares idosos.'
+      'Mantenha sempre os números 192 (SAMU) e 193 (Bombeiros) de fácil acesso para pessoas idosas e familiares.',
+      'Na dúvida entre aguardar ou buscar socorro para sintomas agudos graves, ligue 192 para receber triagem médica preliminar.'
     ],
-    susRightsNote: 'A recusa ou omissão de socorro emergencial configura crime previsto no Artigo 135 do Código Penal Brasileiro. O atendimento estabilizador de urgência no SUS é incondicional a qualquer exigência prévia.',
+    susRightsNote: 'A recusa ou omissão de socorro emergencial configura crime previsto no Artigo 135 do Código Penal Brasileiro. O atendimento estabilizador de urgência no SUS independe de exigências burocráticas prévias.',
     legalBasis: 'Constituição Federal de 1988, Art. 196; Lei 8.080/1990; Política Nacional de Atenção às Urgências (Portaria GM/MS nº 1.863/2003); Código Penal Brasileiro, Art. 135.',
-    lastVerifiedDate: '2026-03-15'
+    lastReviewedDate: '2026-11-03'
   }
 ];

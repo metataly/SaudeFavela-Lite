@@ -94,20 +94,6 @@ export function stopSpeaking(): void {
   }
 }
 
-// Pausa a leitura
-export function pauseSpeaking(): void {
-  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    window.speechSynthesis.pause();
-  }
-}
-
-// Retoma a leitura
-export function resumeSpeaking(): void {
-  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    window.speechSynthesis.resume();
-  }
-}
-
 // Inicia reconhecimento de fala para busca por voz
 export function startVoiceInput(
   onResult: (transcript: string) => void,

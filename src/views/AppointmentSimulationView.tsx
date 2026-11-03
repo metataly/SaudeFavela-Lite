@@ -29,6 +29,34 @@ interface AppointmentSimulationViewProps {
   onSpeak: (text: string) => void;
 }
 
+export interface AppointmentFormData {
+  unitId: string;
+  serviceType: string;
+  preferredDate: string;
+  userName: string;
+  userPhone?: string;
+  notes?: string;
+}
+
+export function validateAppointmentForm(
+  step: number,
+  data: Partial<AppointmentFormData>
+): { valid: boolean; error?: string } {
+  if (step === 1 && !data.unitId) {
+    return { valid: false, error: 'Selecione uma unidade de saúde.' };
+  }
+  if (step === 2 && !data.serviceType) {
+    return { valid: false, error: 'Selecione o tipo de serviço.' };
+  }
+  if (step === 3 && !data.preferredDate) {
+    return { valid: false, error: 'Informe uma data preferencial.' };
+  }
+  if (step === 4 && (!data.userName || !data.userName.trim())) {
+    return { valid: false, error: 'Informe o nome do paciente.' };
+  }
+  return { valid: true };
+}
+
 export const AppointmentSimulationView: React.FC<AppointmentSimulationViewProps> = ({
   preselectedUnit,
   onClearPreselectedUnit,
@@ -73,10 +101,17 @@ export const AppointmentSimulationView: React.FC<AppointmentSimulationViewProps>
   const minDateString = tomorrow.toISOString().split('T')[0];
 
   const handleNextStep = () => {
-    if (step === 1 && !selectedUnitId) return;
-    if (step === 2 && !serviceType) return;
-    if (step === 3 && !preferredDate) return;
-    if (step === 4 && !userName.trim()) return;
+    const formData: AppointmentFormData = {
+      unitId: selectedUnitId,
+      serviceType,
+      preferredDate,
+      userName,
+      userPhone,
+      notes,
+    };
+
+    const validation = validateAppointmentForm(step, formData);
+    if (!validation.valid) return;
 
     if (step === 5) {
       // Conclui a simulação e grava localmente

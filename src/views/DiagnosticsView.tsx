@@ -317,23 +317,23 @@ export const DiagnosticsView: React.FC = () => {
             </div>
           </div>
 
-          {/* Teste de Transferência Adicional entre Abas */}
+          {/* Gravações Locais e Navegação Local */}
           <div className="p-5 rounded-3xl bg-white border border-slate-200 space-y-3">
             <h2 className="text-sm font-bold text-slate-900 flex items-center gap-2">
               <Activity className="w-4 h-4 text-sky-700" />
-              Transferência Adicional ao Navegar pelas 5 Áreas
+              Armazenamento Local e Navegação em Memória
             </h2>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Como o SaúdeFavela-Lite adota arquitetura Single Page Application (SPA) com pré-carregamento do catálogo estático, a alternância entre <strong>Início, Unidades, Guia SUS, Simulação e Avaliação</strong> ocorre inteiramente em memória sem disparar novos pacotes de rede:
+              Como o SaúdeFavela-Lite adota arquitetura Single Page Application (SPA), as transições entre as 5 áreas operam em memória com persistência exclusivamente local no dispositivo:
             </p>
-            <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-1 font-mono">
-              <div className="flex justify-between">
-                <span className="text-slate-600">Requisições de rede ao trocar de aba:</span>
-                <span className="font-bold text-emerald-700">0 requisições (Zero Network Overhead)</span>
+            <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-xs space-y-1.5 font-mono">
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">Gravações locais realizadas (LocalStorage):</span>
+                <span className="font-bold text-sky-800">{telemetry.localWritesCount} escrita(s) no aparelho</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-slate-600">Bytes transferidos por transição:</span>
-                <span className="font-bold text-emerald-700">0 Bytes (Estado reativo local)</span>
+              <div className="flex justify-between items-center">
+                <span className="text-slate-600">Transição de abas e catálogo:</span>
+                <span className="font-bold text-emerald-700">Processamento em memória do navegador</span>
               </div>
             </div>
           </div>

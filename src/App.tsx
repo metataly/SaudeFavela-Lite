@@ -15,7 +15,6 @@ import { HealthUnit, AccessibilitySettings, TextSizePreference } from './types';
 import {
   getStoredSettings,
   saveSettings,
-  initOfflineUnitsCache,
   clearAllLocalData
 } from './services/storageService';
 import {
@@ -34,13 +33,7 @@ export default function App() {
 
   // Estados de Áudio
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [isAudioPaused, setIsAudioPaused] = useState(false);
   const [currentAudioText, setCurrentAudioText] = useState('');
-
-  // Inicializa cache offline de unidades na primeira execução
-  useEffect(() => {
-    initOfflineUnitsCache();
-  }, []);
 
   // Atualiza e persiste preferências de acessibilidade
   const handleUpdateSettings = (newSettings: AccessibilitySettings) => {
@@ -61,7 +54,6 @@ export default function App() {
     if (isSpeaking) {
       stopSpeaking();
       setIsSpeaking(false);
-      setIsAudioPaused(false);
       return;
     }
 
@@ -71,15 +63,12 @@ export default function App() {
       settings.speechRate,
       () => {
         setIsSpeaking(true);
-        setIsAudioPaused(false);
       },
       () => {
         setIsSpeaking(false);
-        setIsAudioPaused(false);
       },
       (err) => {
         setIsSpeaking(false);
-        setIsAudioPaused(false);
         console.warn(err);
       }
     );
@@ -183,14 +172,9 @@ export default function App() {
       {/* Barra Flutuante de Controle do Leitor de Áudio */}
       <AudioAssistantBar
         isSpeaking={isSpeaking}
-        isPaused={isAudioPaused}
         currentText={currentAudioText}
         onStop={() => {
           setIsSpeaking(false);
-          setIsAudioPaused(false);
-        }}
-        onTogglePause={() => {
-          setIsAudioPaused(!isAudioPaused);
         }}
       />
 

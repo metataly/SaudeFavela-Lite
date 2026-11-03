@@ -83,9 +83,12 @@ export const PrivacyNoticeModal: React.FC<PrivacyNoticeModalProps> = ({
           </div>
 
           <div>
-            <h3 className="font-bold text-slate-900 text-sm mb-1">2. Onde as informações ficam guardadas?</h3>
-            <p>
-              Exclusivamente na memória interna do seu próprio navegador ou aparelho celular (via LocalStorage e Service Worker Cache). Nada é transmitido para servidores remotos comerciais ou de terceiros.
+            <h3 className="font-bold text-slate-900 text-sm mb-1">2. Onde as informações ficam guardadas e busca por voz</h3>
+            <p className="mb-2">
+              O app não envia seus dados a servidores próprios. A busca por voz usa o reconhecimento de fala do navegador e, dependendo do navegador, o áudio pode ser processado pelo fabricante. Prefere digitar? A busca por texto funciona sem isso.
+            </p>
+            <p className="text-xs text-slate-500">
+              Preferências de acessibilidade e simulações são mantidas exclusivamente no armazenamento local deste aparelho.
             </p>
           </div>
 
