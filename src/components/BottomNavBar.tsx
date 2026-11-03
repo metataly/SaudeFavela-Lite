@@ -1,7 +1,7 @@
 import React from 'react';
-import { Home, MapPin, BookOpen, CalendarCheck2, Activity } from 'lucide-react';
+import { Home, MapPin, BookOpen, CalendarCheck2 } from 'lucide-react';
 
-export type AppTab = 'home' | 'units' | 'guidance' | 'simulation' | 'diagnostics';
+export type AppTab = 'home' | 'units' | 'guidance' | 'simulation';
 
 interface BottomNavBarProps {
   currentTab: AppTab;
@@ -34,12 +34,6 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab, onSelect
       icon: CalendarCheck2,
       ariaLabel: 'Ir para Simulação Demonstrativa de Agendamento',
     },
-    {
-      id: 'diagnostics' as AppTab,
-      label: 'Avaliação',
-      icon: Activity,
-      ariaLabel: 'Ir para Avaliação Técnica e Diagnóstico',
-    },
   ];
 
   return (
@@ -47,7 +41,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({ currentTab, onSelect
       aria-label="Navegação Principal do Aplicativo"
       className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-lg pb-safe"
     >
-      <div className="max-w-md mx-auto grid grid-cols-5 items-stretch h-16 px-1">
+      <div className="max-w-md mx-auto grid grid-cols-4 items-stretch h-16 px-1">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = currentTab === tab.id;

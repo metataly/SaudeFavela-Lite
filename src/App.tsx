@@ -9,7 +9,6 @@ import { HomeView } from './views/HomeView';
 import { UnitsView } from './views/UnitsView';
 import { GuidanceView } from './views/GuidanceView';
 import { AppointmentSimulationView } from './views/AppointmentSimulationView';
-import { DiagnosticsView } from './views/DiagnosticsView';
 
 import { HealthUnit, AccessibilitySettings, TextSizePreference } from './types';
 import {
@@ -89,8 +88,6 @@ export default function App() {
       screenSummary = 'Você está no Guia de Orientações do SUS. Aqui você encontra instruções claras sobre como conseguir consulta, vacinas e como ser atendido mesmo sem conta de luz no seu nome.';
     } else if (currentTab === 'simulation') {
       screenSummary = 'Você está na Simulação de Agendamento. Esta é uma ferramenta de treino demonstrativa em seis etapas. Sua consulta não será marcada no SUS.';
-    } else if (currentTab === 'diagnostics') {
-      screenSummary = 'Você está no painel de Diagnóstico Técnico e Avaliação Científica do MVP SaúdeFavela-Lite.';
     }
     handleSpeakText(screenSummary);
   };
@@ -162,10 +159,6 @@ export default function App() {
             onClearPreselectedUnit={() => setPreselectedUnit(null)}
             onSpeak={handleSpeakText}
           />
-        )}
-
-        {currentTab === 'diagnostics' && (
-          <DiagnosticsView />
         )}
       </main>
 

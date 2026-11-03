@@ -130,11 +130,11 @@ export const GUIDANCE_TOPICS_DATA: GuidanceTopic[] = [
       'A gestante é orientada sobre a maternidade de referência para o parto de acordo com o território.'
     ],
     communityTips: [
-      'Pergunte na unidade de saúde sobre o transporte para o parto previsto no Cegonha Carioca no município do Rio.',
+      'Pergunte na unidade qual é a maternidade de referência e como chegar até ela em caso de trabalho de parto.',
       'Incentiva-se a realização do Pré-Natal do Parceiro, com exames e acolhimento para a paternidade ativa.'
     ],
     susRightsNote: 'A Lei Federal nº 11.108/2005 (Lei do Acompanhante) garante à gestante o direito de indicar acompanhante de sua livre escolha durante todo o trabalho de parto, parto e pós-parto imediato. Nenhuma maternidade pode proibir esse direito.',
-    legalBasis: 'Lei Federal nº 11.108/2005; Portarias GM/MS nº 5.349 e 5.350/2024 (Rede Alyne, que substituiu a Rede Cegonha); Programa Cegonha Carioca (SMS-RJ).',
+    legalBasis: 'Lei Federal nº 11.108/2005; Portarias GM/MS nº 5.349 e 5.350/2024 (Rede Alyne, que substituiu a Rede Cegonha).',
     lastReviewedDate: '2026-11-03'
   },
   {

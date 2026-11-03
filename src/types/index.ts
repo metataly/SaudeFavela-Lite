@@ -24,20 +24,20 @@ export interface HealthUnit {
   zone: ZoneRJ;
   healthDistrict: string;   // Área de Planejamento (ex.: AP 2.1, AP 3.1, AP 4.0)
   address: string;
-  landmarks: string;
+  landmarks?: string;
   hours: string;
   phone: string;
-  servicesOffered: string[];
+  servicesOffered?: string[];
   dataSource: string;
   sourceYear?: string;
   sourceUrl: string;        // Link de referência pública
   verificationStatus: UnitVerificationStatus;
-  lastUpdated: string;
-  coordinates: {
+  lastUpdated?: string;
+  coordinates?: {
     lat: number;
     lng: number;
   };
-  accessibilityFeatures: string[];
+  accessibilityFeatures?: string[];
   fieldAuditNotes?: string; // Observações para os pesquisadores em campo
 }
 
@@ -53,7 +53,7 @@ export type GuidanceCategory =
 export type InformationLevel =
   | 'direito_universal'             // Garantido pela Constituição e Leis Federais
   | 'procedimento_administrativo'   // Rotina padrão de acolhimento e triagem da APS
-  | 'especifico_municipal_rj'       // Programas locais (ex.: Cegonha Carioca, SMS-RJ)
+  | 'especifico_municipal_rj'       // Programas locais (ex.: SMS-RJ)
   | 'confirmar_na_unidade'          // Informação sujeita à escala da equipe e estoque
   | 'urgencia_emergencia';          // Protocolo de socorro imediato (SAMU/UPA)
 

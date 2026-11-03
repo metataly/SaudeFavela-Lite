@@ -212,13 +212,12 @@ export const HomeView: React.FC<HomeViewProps> = ({
         </div>
       </section>
 
-      {/* Cartão de Garantia de Baixo Consumo e Uso Offline */}
+      {/* Cartão de Uso Offline */}
       <section className="p-4 rounded-2xl bg-slate-100/80 border border-slate-200 text-slate-700 flex items-start gap-3">
         <WifiOff className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" aria-hidden="true" />
         <div className="text-xs space-y-1">
-          <p className="font-bold text-slate-900">Economia Máxima de Dados Móveis</p>
-          <p className="text-slate-600 leading-relaxed">
-            Este aplicativo foi projetado para moradores com franquia de dados limitada. Ele armazena o catálogo no seu telefone e não realiza chamadas desnecessárias de rede.
+          <p className="text-slate-700 leading-relaxed font-medium">
+            Não exige cadastro. Depois da primeira visita, os arquivos do app ficam salvos no celular.
           </p>
         </div>
       </section>

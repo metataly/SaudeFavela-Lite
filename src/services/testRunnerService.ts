@@ -532,7 +532,7 @@ export async function runTechnicalEvaluations(): Promise<TechnicalTestResult[]> 
       status: !hasInvalidArt18With940 ? 'aprovado' : 'reprovado',
       assertion: 'assert(!text.includes("Art. 18" && "940"))',
       details: !hasInvalidArt18With940
-        ? 'Nenhuma menção incorreta ao revogado Art. 18 da Portaria 940/2011. Acolhimento fundamentado no Art. 196 da CF/88 e Art. 7º da Lei 8.080/1990.'
+        ? 'Nenhuma menção incorreta ao Art. 18 da Portaria 940/2011. Acolhimento fundamentado no Art. 196 da CF/88 e Art. 7º da Lei 8.080/1990.'
         : 'FALHA: Encontrada menção ao Art. 18 da Portaria 940/2011 associada a comprovante de residência.',
       executionTimestamp: now,
       reproducibilityStep: 'Busque "Art. 18" nos tópicos de orientação em GUIDANCE_TOPICS_DATA.',
@@ -656,6 +656,115 @@ export async function runTechnicalEvaluations(): Promise<TechnicalTestResult[]> 
       status: 'reprovado',
       assertion: 'assert(allHaveContactAndAddress)',
       details: `Erro ao testar unidades oficiais datadas: ${err?.message}`,
+      executionTimestamp: now,
+    });
+  }
+
+  // =========================================================================
+  // 16. TESTE DE CONFORMIDADE DE DADOS: Remoção de Campos Não Auditados
+  // =========================================================================
+  try {
+    const hasExtraneousFields = HEALTH_UNITS_DATA.some(u =>
+      u.landmarks !== undefined ||
+      u.accessibilityFeatures !== undefined ||
+      u.fieldAuditNotes !== undefined ||
+      u.coordinates !== undefined ||
+      u.servicesOffered !== undefined
+    );
+
+    results.push({
+      id: 'test-16-no-extraneous-unit-fields',
+      title: '16. Integridade de Dados: Remoção de Campos sem Fonte (landmarks, accessibility, coordinates, services)',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: !hasExtraneousFields ? 'aprovado' : 'reprovado',
+      assertion: 'assert(!units.some(u => u.landmarks || u.accessibilityFeatures || u.fieldAuditNotes || u.coordinates))',
+      details: !hasExtraneousFields
+        ? 'Todas as 11 unidades possuem estritamente os dados oficiais confirmáveis (nome, endereço, telefone, AP, fonte e status).'
+        : 'FALHA: Encontrada unidade contendo landmarks, accessibilityFeatures, fieldAuditNotes, servicesOffered ou coordinates.',
+      executionTimestamp: now,
+      reproducibilityStep: 'Inspecione os objetos em HEALTH_UNITS_DATA para verificar ausência de campos não auditados.',
+    });
+  } catch (err: any) {
+    results.push({
+      id: 'test-16-no-extraneous-unit-fields',
+      title: '16. Remoção de Campos Não Auditados',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: 'reprovado',
+      assertion: 'assert(!hasExtraneousFields)',
+      details: `Erro ao verificar campos não auditados: ${err?.message}`,
+      executionTimestamp: now,
+    });
+  }
+
+  // =========================================================================
+  // 17. TESTE DE CONFORMIDADE DE HORÁRIOS: Unidades Datadas com "Confirmar por telefone"
+  // =========================================================================
+  try {
+    const datedUnits = HEALTH_UNITS_DATA.filter(u => u.verificationStatus === 'fonte_oficial_datada');
+    const allDatedHaveHoursToConfirmByPhone = datedUnits.length > 0 && datedUnits.every(u =>
+      u.hours === 'Confirmar por telefone'
+    );
+
+    results.push({
+      id: 'test-17-dated-units-hours-confirm-by-phone',
+      title: '17. Integridade Cadastral: Horários das Unidades Oficiais Datadas ("Confirmar por telefone")',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: allDatedHaveHoursToConfirmByPhone ? 'aprovado' : 'reprovado',
+      assertion: 'assert(datedUnits.every(u => u.hours === "Confirmar por telefone"))',
+      details: allDatedHaveHoursToConfirmByPhone
+        ? 'Todas as unidades com status "fonte_oficial_datada" possuem o horário definido como "Confirmar por telefone", condizente com a fonte SMS-Rio 2021.'
+        : 'FALHA: Unidade "fonte_oficial_datada" possui horário diferente de "Confirmar por telefone".',
+      executionTimestamp: now,
+      reproducibilityStep: 'Inspecione o campo hours de todas as unidades com verificationStatus === "fonte_oficial_datada".',
+    });
+  } catch (err: any) {
+    results.push({
+      id: 'test-17-dated-units-hours-confirm-by-phone',
+      title: '17. Horários das Unidades Oficiais Datadas',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: 'reprovado',
+      assertion: 'assert(allDatedHaveHoursToConfirmByPhone)',
+      details: `Erro ao testar horários das unidades datadas: ${err?.message}`,
+      executionTimestamp: now,
+    });
+  }
+
+  // =========================================================================
+  // 18. TESTE DE CONFORMIDADE NORMATIVA: Ausência de "Cegonha Carioca"
+  // =========================================================================
+  try {
+    const allGuidanceRaw = GUIDANCE_TOPICS_DATA.map(t =>
+      `${t.title} ${t.shortSummary} ${t.whatToBring.join(' ')} ${t.stepsToFollow.join(' ')} ${t.communityTips.join(' ')} ${t.susRightsNote} ${t.legalBasis}`
+    ).join(' ');
+
+    const hasCegonhaCarioca = allGuidanceRaw.includes('Cegonha Carioca');
+
+    results.push({
+      id: 'test-18-absence-cegonha-carioca',
+      title: '18. Conformidade Normativa: Ausência de Menção a "Cegonha Carioca"',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: !hasCegonhaCarioca ? 'aprovado' : 'reprovado',
+      assertion: 'assert(!allGuidanceRaw.includes("Cegonha Carioca"))',
+      details: !hasCegonhaCarioca
+        ? 'Nenhuma menção a "Cegonha Carioca" encontrada no catálogo de orientações e bases legais.'
+        : 'FALHA: Encontrada menção a "Cegonha Carioca" em tópico de orientação.',
+      executionTimestamp: now,
+      reproducibilityStep: 'Busque o termo "Cegonha Carioca" em GUIDANCE_TOPICS_DATA.',
+    });
+  } catch (err: any) {
+    results.push({
+      id: 'test-18-absence-cegonha-carioca',
+      title: '18. Ausência de Menção a Cegonha Carioca',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: 'reprovado',
+      assertion: 'assert(!hasCegonhaCarioca)',
+      details: `Erro ao verificar ausência de Cegonha Carioca: ${err?.message}`,
       executionTimestamp: now,
     });
   }

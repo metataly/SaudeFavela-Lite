@@ -8,13 +8,9 @@ import {
   Clock,
   Bookmark,
   BookmarkCheck,
-  Navigation,
   AlertCircle,
-  ExternalLink,
   Volume2,
   CalendarCheck2,
-  HelpCircle,
-  Building2,
   FileText
 } from 'lucide-react';
 import { HealthUnit } from '../types';
@@ -37,9 +33,6 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
   const [savedIds, setSavedIds] = useState<string[]>(() => getSavedUnitIds());
   const [isListening, setIsListening] = useState(false);
   const [voiceError, setVoiceError] = useState<string | null>(null);
-  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
-  const [locationError, setLocationError] = useState<string | null>(null);
-  const [isLocating, setIsLocating] = useState(false);
 
   // Manipulador de salvamento local
   const handleToggleSave = (unitId: string) => {
@@ -76,51 +69,6 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
     }
   };
 
-  // Localização aproximada
-  const handleRequestLocation = () => {
-    setLocationError(null);
-    if (!navigator.geolocation) {
-      setLocationError('Seu aparelho não suporta geolocalização. Use a busca manual abaixo.');
-      return;
-    }
-
-    setIsLocating(true);
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserLocation({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-        setIsLocating(false);
-      },
-      (error) => {
-        setIsLocating(false);
-        if (error.code === error.PERMISSION_DENIED) {
-          setLocationError('Permissão de localização recusada. Você pode buscar pelo nome da favela ou bairro.');
-        } else {
-          setLocationError('Não foi possível obter sua localização exata. Use a busca manual.');
-        }
-      },
-      { timeout: 8000, enableHighAccuracy: false }
-    );
-  };
-
-  // Cálculo de distância aproximada em km
-  const getDistanceKm = (unit: HealthUnit) => {
-    if (!userLocation) return null;
-    const R = 6371;
-    const dLat = ((unit.coordinates.lat - userLocation.lat) * Math.PI) / 180;
-    const dLon = ((unit.coordinates.lng - userLocation.lng) * Math.PI) / 180;
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((userLocation.lat * Math.PI) / 180) *
-        Math.cos((unit.coordinates.lat * Math.PI) / 180) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return (R * c).toFixed(1);
-  };
-
   // Filtragem
   const filteredUnits = useMemo(() => {
     let list = HEALTH_UNITS_DATA;
@@ -140,7 +88,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
     if (searchTerm.trim()) {
       const term = searchTerm.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
       list = list.filter((u) => {
-        const text = `${u.name} ${u.community} ${u.neighborhood} ${u.address} ${u.landmarks} ${u.servicesOffered.join(' ')}`
+        const text = `${u.name} ${u.community} ${u.neighborhood} ${u.address}`
           .toLowerCase()
           .normalize('NFD')
           .replace(/[\u0300-\u036f]/g, '');
@@ -148,27 +96,21 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
       });
     }
 
-    // Se temos localização, ordena por proximidade
-    if (userLocation) {
-      list = [...list].sort((a, b) => {
-        const distA = parseFloat(getDistanceKm(a) || '999');
-        const distB = parseFloat(getDistanceKm(b) || '999');
-        return distA - distB;
-      });
-    }
-
     return list;
-  }, [searchTerm, selectedZone, onlySaved, savedIds, userLocation]);
+  }, [searchTerm, selectedZone, onlySaved, savedIds]);
 
   const handleReadUnit = (unit: HealthUnit) => {
+    const unitServices = unit.unitType === 'upa_emergencia'
+      ? 'Unidades de Pronto Atendimento oferecem pronto atendimento de urgência e emergência 24 horas. Confirme os serviços na unidade.'
+      : 'Clínicas da Família e Centros Municipais de Saúde oferecem atenção primária, como consultas, vacinas e pré-natal. Confirme os serviços e horários na unidade.';
+
     const text = `
       ${unit.name}.
       Localizada em ${unit.community}, no bairro ${unit.neighborhood}, Área de Planejamento ${unit.healthDistrict}.
       Endereço: ${unit.address}.
-      Ponto de referência: ${unit.landmarks}.
       Horário de funcionamento: ${unit.hours}.
       Telefone: ${unit.phone}.
-      Serviços oferecidos: ${unit.servicesOffered.slice(0, 4).join(', ')}.
+      Serviços: ${unitServices}
     `;
     onSpeak(text);
   };
@@ -225,24 +167,8 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
         )}
       </div>
 
-      {/* Botão Opcional de Localização e Filtro de Salvos */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-        <button
-          type="button"
-          onClick={handleRequestLocation}
-          disabled={isLocating}
-          className="min-h-[44px] px-3.5 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 text-xs font-semibold flex items-center gap-2 border border-sky-200 transition active:scale-95 disabled:opacity-50"
-        >
-          <Navigation className={`w-4 h-4 ${isLocating ? 'animate-spin' : ''}`} />
-          <span>
-            {isLocating
-              ? 'Localizando...'
-              : userLocation
-              ? 'Localização ativa (ordenado por distância)'
-              : 'Ver unidades mais próximas de mim'}
-          </span>
-        </button>
-
+      {/* Filtro de Salvos */}
+      <div className="flex items-center justify-end gap-2 pt-1">
         <button
           type="button"
           onClick={() => setOnlySaved(!onlySaved)}
@@ -256,13 +182,6 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
           <span>Salvas no celular ({savedIds.length})</span>
         </button>
       </div>
-
-      {locationError && (
-        <p className="text-xs text-amber-800 bg-amber-50 p-2.5 rounded-xl border border-amber-200 flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0" />
-          {locationError}
-        </p>
-      )}
 
       {/* Filtros de Região / Zona */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none" role="tablist" aria-label="Filtrar por região do Rio">
@@ -322,7 +241,6 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
         <div className="space-y-4">
           {filteredUnits.map((unit) => {
             const isSaved = savedIds.includes(unit.id);
-            const distance = getDistanceKm(unit);
             const isUpa = unit.unitType === 'upa_emergencia';
             const isDatedSource = unit.verificationStatus === 'fonte_oficial_datada';
             const hasDirectPhone = !unit.phone.includes('Confirmar');
@@ -343,12 +261,6 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                       </span>
                       <span aria-hidden="true">·</span>
                       <span>{unit.healthDistrict}</span>
-                      {distance && (
-                        <>
-                          <span aria-hidden="true">·</span>
-                          <span className="font-bold text-emerald-700">~{distance} km</span>
-                        </>
-                      )}
                     </div>
                     <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                       {unit.name}
@@ -386,10 +298,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                 <div className="mt-3.5 space-y-2 text-xs text-slate-600">
                   <div className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" aria-hidden="true" />
-                    <div>
-                      <p className="font-medium text-slate-800">{unit.address}</p>
-                      <p className="text-slate-500 text-[11px] mt-0.5 italic">Ref: {unit.landmarks}</p>
-                    </div>
+                    <p className="font-medium text-slate-800">{unit.address}</p>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -414,40 +323,14 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                   </div>
                 </div>
 
-                {/* Serviços Disponíveis */}
-                <div className="mt-3 pt-3 border-t border-slate-100">
-                  <div className="text-[11px] font-bold text-slate-700 mb-1.5 uppercase tracking-wider">
-                    Serviços Oferecidos na Atenção Básica:
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {unit.servicesOffered.map((srv, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg font-medium"
-                      >
-                        {srv}
-                      </span>
-                    ))}
-                  </div>
+                {/* Texto único por tipo de unidade */}
+                <div className="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-600 leading-relaxed">
+                  <p>
+                    {isUpa
+                      ? 'Unidades de Pronto Atendimento (UPAs) oferecem pronto atendimento de urgência e emergência 24 horas. Confirme os serviços na unidade.'
+                      : 'Clínicas da Família e Centros Municipais de Saúde oferecem atenção primária (consultas, vacinas, pré-natal, entre outros). Confirme os serviços e horários na unidade.'}
+                  </p>
                 </div>
-
-                {/* Recursos de Acessibilidade */}
-                <div className="mt-2.5 flex items-center gap-1.5 flex-wrap text-[11px] text-slate-500">
-                  <span className="font-semibold text-slate-700">Acessibilidade:</span>
-                  {unit.accessibilityFeatures.map((feat, idx) => (
-                    <span key={idx} className="bg-sky-50 text-sky-800 px-2 py-0.5 rounded text-[10px] font-medium">
-                      ✓ {feat}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Nota de Auditoria para Pesquisadores */}
-                {unit.fieldAuditNotes && (
-                  <div className="mt-2 p-2 rounded-xl bg-slate-50 border border-slate-200/80 text-[11px] text-slate-600 flex items-start gap-1.5">
-                    <HelpCircle className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
-                    <span><strong>Nota de Campo:</strong> {unit.fieldAuditNotes}</span>
-                  </div>
-                )}
 
                 {/* Rodapé com Fonte, Ano e Confirmação */}
                 <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[11px] text-slate-600">

@@ -17,30 +17,12 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Zona Sul)',
     address: 'Av. Niemeyer, 776, São Conrado, Rio de Janeiro - RJ',
-    landmarks: 'No Centro de Cidadania Rinaldo De Lamare, em frente à passarela da Rocinha e ao Metrô São Conrado',
-    hours: 'Segunda a sexta das 07:00 às 18:00',
+    hours: 'Confirmar por telefone',
     phone: '(21) 3324-2454 / (21) 3324-2487',
-    servicesOffered: [
-      'Consultas Médicas (Medicina de Família e Comunidade)',
-      'Consultas de Enfermagem e Acolhimento à Demanda Espontânea',
-      'Vacinação de Rotina (PNI) e Campanhas',
-      'Pré-Natal de Baixo Risco e Puericultura',
-      'Dispensação de Medicamentos da Atenção Básica (Farmácia)',
-      'Curativos, Retirada de Pontos e Aferição de Pressão',
-      'Acompanhamento de Hipertensão e Diabetes (Hiperdia)',
-      'Visitas Domiciliares das Equipes de Saúde da Família (ACS)'
-    ],
     dataSource: 'Lista de unidades da SMS-Rio',
     sourceYear: '2021',
     sourceUrl: 'https://saude.prefeitura.rio',
-    verificationStatus: 'fonte_oficial_datada',
-    lastUpdated: '2021-12-31',
-    coordinates: {
-      lat: -22.9922,
-      lng: -43.2505,
-    },
-    accessibilityFeatures: ['Rampa de acesso suave', 'Banheiro adaptado', 'Atendimento prioritário'],
-    fieldAuditNotes: 'Unidade integrada a centro de cidadania municipal. Elevador interno para acesso a andares superiores.'
+    verificationStatus: 'fonte_oficial_datada'
   },
   {
     id: 'cf-maria-do-socorro',
@@ -51,29 +33,12 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Zona Sul)',
     address: 'Estrada da Gávea, 445, Rocinha, Rio de Janeiro - RJ',
-    landmarks: 'Curva do S, subindo pela Estrada da Gávea, integrada ao complexo de saúde da Rocinha',
-    hours: 'Segunda a sexta das 07:00 às 18:00',
+    hours: 'Confirmar por telefone',
     phone: '(21) 3322-7395 / (21) 3322-6694',
-    servicesOffered: [
-      'Estratégia Saúde da Família (ESF)',
-      'Sala de Vacinação',
-      'Coleta de Sangue e Exames Preventivos (Citopatológico)',
-      'Farmácia Básica de Medicamentos',
-      'Saúde Bucal (Odontologia Básica da Atenção Primária)',
-      'Planejamento Familiar e Distribuição de Métodos Contraceptivos',
-      'Tratamento Diretamente Observado para Tuberculose e Hanseníase'
-    ],
     dataSource: 'Lista de unidades da SMS-Rio',
     sourceYear: '2021',
     sourceUrl: 'https://saude.prefeitura.rio',
-    verificationStatus: 'fonte_oficial_datada',
-    lastUpdated: '2021-12-31',
-    coordinates: {
-      lat: -22.9885,
-      lng: -43.2471,
-    },
-    accessibilityFeatures: ['Acesso ao nível da rua', 'Portas alargadas', 'Guichê rebaixado'],
-    fieldAuditNotes: 'Localizada no mesmo complexo físico da UPA 24h Rocinha, no pavimento superior.'
+    verificationStatus: 'fonte_oficial_datada'
   },
   {
     id: 'cf-zilda-arns',
@@ -84,28 +49,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Norte',
     healthDistrict: 'AP 3.1 (Leopoldina e Ilha)',
     address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    landmarks: 'Próxima à estação Palmeiras do Teleférico e ao Colégio Estadual',
     hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    servicesOffered: [
-      'Equipes Multiprofissionais de Saúde da Família (eSF)',
-      'Vacinação Infantil, Adolescente e Adulto',
-      'Farmácia Comunitária Pública do SUS',
-      'Acompanhamento de Gestantes (Pré-Natal)',
-      'Acolhimento com Classificação de Risco Clínico',
-      'Coleta de Exames Preventivos e Testes Rápidos (HIV/Sífilis/Hepatite)',
-      'Atendimento Odontológico de Atenção Básica'
-    ],
     dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'a_confirmar',
-    lastUpdated: '2026-11-03',
-    coordinates: {
-      lat: -22.8631,
-      lng: -43.2712,
-    },
-    accessibilityFeatures: ['Piso tátil na entrada', 'Rampa acessível', 'Sanitários adaptados'],
-    fieldAuditNotes: 'Linha de atendimento para moradores do Morro do Alemão, Nova Brasília e Palmeiras.'
+    verificationStatus: 'a_confirmar'
   },
   {
     id: 'cf-herbert-de-souza',
@@ -116,28 +64,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Norte',
     healthDistrict: 'AP 3.1 (Maré e Ramos)',
     address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    landmarks: 'Na Vila do João, próximo à Linha Amarela e ao CIEP Samora Machel',
     hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    servicesOffered: [
-      'Consultas Médicas da Atenção Primária',
-      'Sala de Curativos e Procedimentos Ambulatoriais',
-      'Sala de Imunização e Vacinas de Rotina',
-      'Dispensação de Medicamentos Essenciais (RENAME)',
-      'Acompanhamento da Saúde da Criança (Puericultura)',
-      'Incentivo e Apoio ao Aleitamento Materno',
-      'Acolhimento à Demanda Espontânea'
-    ],
     dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'a_confirmar',
-    lastUpdated: '2026-11-03',
-    coordinates: {
-      lat: -22.8688,
-      lng: -43.2359,
-    },
-    accessibilityFeatures: ['Rampa com corrimão duplo', 'Sanitário adaptado', 'Sinalização com fontes ampliadas'],
-    fieldAuditNotes: 'Área com grande fluxo comunitário. Recomenda-se confirmar dados presencialmente ou por telefone oficial.'
+    verificationStatus: 'a_confirmar'
   },
   {
     id: 'cf-victor-valla',
@@ -148,28 +79,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Norte',
     healthDistrict: 'AP 3.1 (Manguinhos/Bonsucesso)',
     address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    landmarks: 'Ao lado da estação de trem SuperVia de Manguinhos e próximo ao campus da Fiocruz',
     hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    servicesOffered: [
-      'Estratégia Saúde da Família (ESF)',
-      'Consultas Clínicas e de Enfermagem',
-      'Imunização Completa pelo PNI',
-      'Dispensação de Remédios Essenciais',
-      'Coleta de Exames Laboratoriais',
-      'Pré-Natal, Puericultura e Saúde da Mulher',
-      'Grupos de Controle de Tabagismo e Educação em Saúde'
-    ],
     dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'a_confirmar',
-    lastUpdated: '2026-11-03',
-    coordinates: {
-      lat: -22.8872,
-      lng: -43.2498,
-    },
-    accessibilityFeatures: ['Acesso universal plano', 'Banheiros adaptados', 'Assentos prioritários'],
-    fieldAuditNotes: 'Excelente acessibilidade no nível da rua e proximidade com transporte férreo.'
+    verificationStatus: 'a_confirmar'
   },
   {
     id: 'cf-amelia-dos-santos',
@@ -180,28 +94,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Oeste',
     healthDistrict: 'AP 4.0 (Jacarepaguá e Barra)',
     address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    landmarks: 'Próxima ao Centro Esportivo da Cidade de Deus e integrada ao polo de saúde da CDD',
     hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    servicesOffered: [
-      'Clínica Médica e Atenção Primária',
-      'Enfermagem e Imunização',
-      'Farmácia Básica',
-      'Controle e Acompanhamento de Doenças Crônicas',
-      'Pré-Natal e Coleta de Citopatológico',
-      'Atendimento Odontológico de Atenção Básica',
-      'Visita Domiciliar dos Agentes Comunitários'
-    ],
     dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'a_confirmar',
-    lastUpdated: '2026-11-03',
-    coordinates: {
-      lat: -22.9515,
-      lng: -43.3621,
-    },
-    accessibilityFeatures: ['Rampa ampla', 'Banheiro adaptado para cadeirantes', 'Circulação desobstruída'],
-    fieldAuditNotes: 'Cobertura em microáreas com alta vulnerabilidade social na Cidade de Deus.'
+    verificationStatus: 'a_confirmar'
   },
   {
     id: 'cf-santa-marta',
@@ -212,28 +109,12 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Botafogo e Adjacências)',
     address: 'Rua São Clemente, 312, Botafogo, Rio de Janeiro - RJ',
-    landmarks: 'Na base do Morro Dona Marta, próximo à Estação 1 do Plano Inclinado',
-    hours: 'Segunda a sexta das 07:00 às 17:00',
+    hours: 'Confirmar por telefone',
     phone: '(21) 2286-2374',
-    servicesOffered: [
-      'Atenção Primária à Saúde',
-      'Vacinação',
-      'Dispensação de Medicamentos',
-      'Aferição de Pressão e Glicemia Capilar',
-      'Consultas Agendadas e Acolhimento Espontâneo',
-      'Acompanhamento Territorial por Microáreas'
-    ],
     dataSource: 'Lista de unidades da SMS-Rio',
     sourceYear: '2021',
     sourceUrl: 'https://saude.prefeitura.rio',
-    verificationStatus: 'fonte_oficial_datada',
-    lastUpdated: '2021-12-31',
-    coordinates: {
-      lat: -22.9542,
-      lng: -43.1932,
-    },
-    accessibilityFeatures: ['Acesso na parte baixa do morro', 'Banheiro acessível'],
-    fieldAuditNotes: 'Clínica da Família com base no sopé do Morro Dona Marta.'
+    verificationStatus: 'fonte_oficial_datada'
   },
   {
     id: 'cf-pavao-cantagalo',
@@ -244,28 +125,12 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Copacabana/Ipanema)',
     address: 'Ladeira Saint Roman, 172, Copacabana, Rio de Janeiro - RJ',
-    landmarks: 'Subida da Ladeira Saint Roman pelo corte entre Copacabana e Ipanema',
-    hours: 'Segunda a sexta das 07:00 às 18:00',
+    hours: 'Confirmar por telefone',
     phone: '(21) 2523-4127 / (21) 2513-1549',
-    servicesOffered: [
-      'Equipes Multiprofissionais de Saúde',
-      'Vacinas de Calendário Nacional',
-      'Farmácia Básica',
-      'Pré-Natal e Testes Rápidos',
-      'Curativos e Injeções',
-      'Acompanhamento Pediátrico'
-    ],
     dataSource: 'Lista de unidades da SMS-Rio',
     sourceYear: '2021',
     sourceUrl: 'https://saude.prefeitura.rio',
-    verificationStatus: 'fonte_oficial_datada',
-    lastUpdated: '2021-12-31',
-    coordinates: {
-      lat: -22.9818,
-      lng: -43.1965,
-    },
-    accessibilityFeatures: ['Acesso adaptado para mobilidade reduzida', 'Atendimento humanizado'],
-    fieldAuditNotes: 'Atende às comunidades do Cantagalo, Pavão e Pavãozinho.'
+    verificationStatus: 'fonte_oficial_datada'
   },
   {
     id: 'cms-chapeu-mangueira',
@@ -276,27 +141,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Leme/Copacabana)',
     address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    landmarks: 'Na subida da Ladeira Ary Barroso, início da ladeira de acesso às duas comunidades',
     hours: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
     phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    servicesOffered: [
-      'Atenção Básica e ESF',
-      'Vacinação',
-      'Farmácia Básica',
-      'Acolhimento de Enfermagem',
-      'Saúde da Mulher e Preventivo',
-      'Controle de Hipertensão e Diabetes'
-    ],
     dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'a_confirmar',
-    lastUpdated: '2026-11-03',
-    coordinates: {
-      lat: -22.9621,
-      lng: -43.1704,
-    },
-    accessibilityFeatures: ['Rampa com corrimão', 'Sanitário adaptado'],
-    fieldAuditNotes: 'Acesso por ladeira íngreme; dados de contato e horário devem ser confirmados nos canais oficiais.'
+    verificationStatus: 'a_confirmar'
   },
   {
     id: 'upa-manguinhos-24h',
@@ -307,27 +156,11 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Norte',
     healthDistrict: 'AP 3.1 (Urgência e Emergência)',
     address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    landmarks: 'Ao lado da Clínica da Família Victor Valla e da estação de Manguinhos',
     hours: 'Funciona 24 horas',
     phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    servicesOffered: [
-      'Atendimento de Urgência e Emergência Adulto e Pediátrico 24h',
-      'Estabilização de Pacientes Críticos',
-      'Exames de Raio-X de Urgência',
-      'Eletrocardiograma (ECG)',
-      'Medicação Injetável e Inalação de Urgência',
-      'Transferência Regulada via SAMU para Hospitais'
-    ],
     dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'a_confirmar',
-    lastUpdated: '2026-11-03',
-    coordinates: {
-      lat: -22.8870,
-      lng: -43.2495,
-    },
-    accessibilityFeatures: ['Acesso prioritário de ambulâncias e macas', 'Acessibilidade total 24h'],
-    fieldAuditNotes: 'Unidade de retaguarda de pronto atendimento para os territórios de Manguinhos e Jacarezinho.'
+    verificationStatus: 'a_confirmar'
   },
   {
     id: 'upa-rocinha-24h',
@@ -338,25 +171,10 @@ export const HEALTH_UNITS_DATA: HealthUnit[] = [
     zone: 'Zona Sul',
     healthDistrict: 'AP 2.1 (Urgência e Emergência)',
     address: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    landmarks: 'Curva do S, pavimento térreo do complexo de saúde da Rocinha',
     hours: 'Funciona 24 horas',
     phone: 'Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746',
-    servicesOffered: [
-      'Pronto Atendimento Clínico e Pediátrico de Emergência 24h',
-      'Leitos de Observação e Estabilização',
-      'Exames Laboratoriais e Radiológicos de Urgência',
-      'Suturas e Curativos de Trauma Agudo',
-      'Suporte para Crises Respiratórias Agudas'
-    ],
     dataSource: 'CNES / Central 1746 (indicação de consulta)',
     sourceUrl: 'https://cnes.saude.gov.br/',
-    verificationStatus: 'a_confirmar',
-    lastUpdated: '2026-11-03',
-    coordinates: {
-      lat: -22.9886,
-      lng: -43.2472,
-    },
-    accessibilityFeatures: ['Rampa de macas e cadeiras de rodas', 'Portas automáticas', 'Banheiro adaptado 24h'],
-    fieldAuditNotes: 'Porta de entrada de urgência 24h de referência para a região.'
+    verificationStatus: 'a_confirmar'
   }
 ];
