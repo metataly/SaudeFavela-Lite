@@ -127,7 +127,7 @@ src/
 |---|---|---|
 | `Nathaly Pereira Ferreira` | `Desenvolvimento, pesquisa, testes` | `@metataly` |
 | `Luís Davi da Silveira Moutinho` | `Desenvolvimento, pesquisa, testes` | `[PREENCHER]` |
-| `Sérgio Carlesso Filho` | `Desenvolvimento, pesquisa, testes` | `[PREENCHER]` |
+| `Sérgio Carlesso Filho` | `Desenvolvimento, pesquisa, testes` | `@sergiocarlesso` |
 
 **Orientação / instituição:** `Ricardo Marciano, FAETERJ-RIO`
 
