@@ -1,128 +1,145 @@
+<div align="center">
+
 # SaúdeFavela-Lite
 
-**SaúdeFavela-Lite** é uma Progressive Web App (PWA) acessível e inclusiva, voltada para orientação sobre os serviços da Atenção Primária à Saúde (APS) no Sistema Único de Saúde (SUS) no município do Rio de Janeiro.
+**Informação de saúde que cabe no celular, funciona com pouca internet e fala a língua de quem mais precisa dela.**
 
-O projeto atua como camada intermediária pedagógica e informativa entre o cidadão e a rede de saúde, sem substituir sistemas oficiais de regulação governamentais ou configurar atendimento médico direto.
+![PWA](https://img.shields.io/badge/PWA-instalável-5A0FC8)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-build-646CFF?logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-tipado-3178C6?logo=typescript&logoColor=white)
+![Status](https://img.shields.io/badge/status-MVP-orange)
 
----
+*Arquitetura PWA e acessibilidade assistiva para enfrentar o apartheid digital na Atenção Primária à Saúde no Rio de Janeiro.*
 
-## 1. O que o app é
-- Um guia digital informativo com catálogo territorial de unidades de saúde (Clínicas da Família, CMS e UPAs 24h).
-- Um repositório de orientações sobre direitos sanitários (acolhimento com classificação de risco, vacinação, dispensação de medicamentos, pré-natal e urgências).
-- Uma ferramenta demonstrativa de simulação de solicitação de agendamento em 6 etapas para treino e familiarização de usuários com baixo letramento digital.
-
----
-
-## 2. O que funciona offline
-- **Arquivos e Recursos do App:** Graças ao Service Worker e Cache Storage da PWA, toda a interface gráfica (HTML, CSS, JavaScript, ícones e fontes nativas) permanece 100% utilizável sem conexão à internet após a primeira visita.
-- **Catálogo de Unidades:** Os dados das unidades de saúde estão embutidos diretamente no bundle da aplicação, permitindo busca e filtragem por região sem depender de rede ou de requisições a bancos de dados externos.
-- **Guia de Direitos e Normas:** Todas as 6 diretrizes normativas (baseadas na CF/88, Lei 8.080/1990, PNAB e Rede Alyne) estão disponíveis offline.
-- **Simulação de Agendamento:** O fluxo de simulação pedagógica opera integralmente no dispositivo e armazena os protocolos demonstrativos no LocalStorage do navegador.
-- **Preferências de Acessibilidade:** Configurações de tamanho de fonte, contraste elevado e redução de movimento são salvas e recuperadas localmente.
+</div>
 
 ---
 
-## 3. O que NÃO funciona offline
-- **Busca por Voz:** A transcrição por voz depende da Web Speech API nativa do navegador do usuário. Na maioria dos navegadores (como Google Chrome no Android ou desktop), o áudio pode ser processado remotamente pelos servidores do fabricante do navegador. Caso o dispositivo esteja desconectado da internet, o reconhecimento de voz falhará e a interface exibirá aviso orientando a digitação manual.
-- **Atualização de Versão:** Novas versões do aplicativo e atualizações do Service Worker exigem conexão para detecção e download do novo cache.
+## O problema
+
+Quem mora em favela e comunidade no Rio costuma enfrentar três barreiras ao mesmo tempo ao tentar usar o SUS: **não saber o que é seu direito** (por exemplo, o que fazer sem comprovante de residência), **não saber para onde ir** e **não ter internet estável, plano de dados ou familiaridade com aplicativos complexos**. O resultado é gente deixando de buscar atendimento por falta de informação, não por falta de serviço.
+
+## A ideia
+
+O SaúdeFavela-Lite é um **aplicativo web leve (PWA)** que reúne, em português simples:
+
+- orientações sobre direitos e acesso ao SUS;
+- um catálogo de unidades de Atenção Primária e UPAs, com a fonte de cada informação à vista;
+- recursos de acessibilidade, como leitura em voz alta e busca por voz.
+
+Ele **não faz diagnóstico, não substitui profissional de saúde e não usa inteligência artificial generativa**. Em emergência, ligue **192 (SAMU)** ou **193 (Bombeiros)**.
+
+## O que o MVP já faz
+
+| Recurso | Descrição |
+|---|---|
+| **Guias de direitos e acesso** | Textos curtos sobre situações do dia a dia (acolhimento sem comprovante, pré-natal, vacinação, medicamentos, urgência), com a base legal citada. |
+| **Catálogo de unidades** | Busca por comunidade ou nome. Cada unidade mostra de onde veio a informação e quando, e o que ainda precisa ser confirmado por telefone. |
+| **Leitura em voz alta** | Botões "Ouvir" e "Parar" usando a síntese de voz do navegador, para quem tem dificuldade de leitura. |
+| **Busca por voz** | Ditar a busca em vez de digitar (depende do navegador; veja a seção de privacidade). |
+| **Simulação de agendamento** | Treino do passo a passo de uma consulta, **sem marcar nada de verdade**. |
+| **Instalável e com cache** | Pode ser instalado na tela inicial. Depois da primeira visita, os arquivos do app ficam salvos no aparelho. |
+
+> **O que "offline" quer dizer aqui:** os arquivos do app ficam salvos no celular depois da primeira visita. Recursos que dependem de internet, como a busca por voz em alguns navegadores, não funcionam sem conexão.
+
+## Dados: o que é confirmado e o que não é
+
+Saúde pública exige cuidado com informação. Por isso, **o app diz de onde veio cada dado** e não esconde o que não foi confirmado.
+
+- Cada unidade tem um **status de confiança**: com fonte oficial datada, com endereço sustentado por fonte, ou a confirmar.
+- O que não tem fonte aparece como **"Confirmar no CNES ou na Central 1746"**. O app não inventa telefone nem horário.
+- Fontes oficiais às vezes divergem entre si. Quando isso acontece, o app mostra o aviso em vez de escolher um dos valores em silêncio.
+- O texto dos guias é **revisado pela equipe e não substitui orientação profissional**. Antes de uso real, as orientações devem passar por validação de profissional de saúde.
+
+**Onde confirmar:** [CNES](https://cnes.saude.gov.br) e Central 1746 da Prefeitura do Rio.
+
+**Última revisão dos dados:** `12/11/2026`
+
+## Privacidade
+
+- Não há servidor próprio, cadastro, login, rastreadores nem anúncios.
+- Preferências e histórico ficam **no próprio aparelho** (armazenamento local do navegador).
+- A **busca por voz usa o reconhecimento de fala do navegador**. Dependendo do navegador, o áudio pode ser processado pelo fabricante. A busca por texto funciona sem isso.
+
+## Tecnologias
+
+React 19 · TypeScript · Vite · Tailwind CSS 4 · `vite-plugin-pwa` (Service Worker e manifesto) · Web Speech API (voz)
+
+## Como rodar
+
+Pré-requisito: Node.js instalado.
+
+```bash
+# instalar dependências
+npm install
+
+# modo desenvolvimento
+npm run dev
+
+# gerar a versão de produção
+npm run build
+
+# testar a versão gerada (necessário para validar o PWA e o cache)
+npx vite preview
+```
+
+Para testar o modo offline: abra a versão gerada, navegue pelo app, ative o modo avião e recarregue a página.
+
+## Estrutura do projeto
+
+```
+src/
+├── components/   # barra de áudio, avisos de privacidade e acessibilidade, banner offline
+├── data/         # unidades de saúde e tópicos de orientação (com fontes)
+├── services/     # voz, armazenamento local, desempenho, testes internos
+├── views/        # telas: início, unidades, orientações, simulação, diagnóstico
+└── types/        # tipos TypeScript
+```
+
+## Limitações conhecidas
+
+- Catálogo **parcial**: nem todas as unidades têm endereço e telefone confirmados em fonte atual.
+- Parte dos contatos vem de listas oficiais **datadas**; confirme por telefone antes de ir.
+- Os testes internos verificam regras do app e a ausência de textos já corrigidos. **Não provam que o conteúdo de saúde está correto.**
+- O consumo de dados e o desempenho em redes lentas **ainda não foram medidos** em campo.
+- Ícone do PWA no formato maskable precisa de revisão.
+
+## Roadmap
+
+**Agora (MVP)**
+- [x] Guias de direitos com base legal
+- [x] Catálogo de unidades com status de fonte
+- [x] Leitura em voz alta e busca por voz
+- [x] PWA instalável com cache dos arquivos do app
+
+**Próximos passos**
+- [ ] Completar e confirmar os dados das unidades (CNES e SMS-Rio)
+- [ ] Revisão do conteúdo por profissional de saúde
+- [ ] Medição de consumo de dados e desempenho com Lighthouse e teste em campo
+- [ ] Teste de usabilidade com moradores e agentes comunitários de saúde
+- [ ] Teste de acessibilidade com leitor de tela (TalkBack)
+- [ ] Ampliar o catálogo para outras comunidades
+
+## Equipe
+
+| Nome | Função | Contato |
+|---|---|---|
+| `Nathaly Pereira Ferreira` | `Desenvolvimento, pesquisa, testes` | `@metataly` |
+| `Luís Davi da Silveira Moutinho` | `Desenvolvimento, pesquisa, testes` | `[PREENCHER]` |
+| `Sérgio Carlesso Filho` | `Desenvolvimento, pesquisa, testes` | `[PREENCHER]` |
+
+**Orientação / instituição:** `Ricardo Marciano, FAETERJ-RIO`
+
+
+## Licença
+
+O conteúdo de orientação e os dados de unidades têm origem em fontes públicas, citadas no próprio app.
 
 ---
 
-## 4. Situação dos Dados das Unidades (Auditoria Cadastral)
+<div align="center">
 
-Nenhum dado é apresentado como verificado sem fonte e data visíveis.
+*Feito para que informação de saúde chegue a quem mais precisa dela.*
 
-A versão anterior do catálogo continha unidades com localização incorreta (Herbert de Souza e Amélia dos Santos Ferreira); elas foram corrigidas conforme listas da SMS-Rio.
-
-### A) Unidades com Fonte Oficial Datada (`fonte_oficial_datada`)
-*(Endereço e telefone extraídos de publicação oficial com ano informado. Horários devem ser confirmados por telefone antes de ir):*
-
-1. **Clínica da Família Rinaldo De Lamare** (Rocinha / São Conrado)
-   - Fonte: Lista de unidades da SMS-Rio, 2021 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2022/02/UnidadesTratamentoTabagismo-SITE-MRJ-4-01-21.docx.pdf))
-   - Endereço: Av. Niemeyer, 776, São Conrado, Rio de Janeiro - RJ
-   - Telefone: (21) 3324-2454 / (21) 3324-2487
-   - Horário: Confirmar por telefone
-
-2. **Clínica da Família Maria do Socorro Silva e Souza** (Rocinha)
-   - Fonte: Lista de unidades da SMS-Rio, 2021 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2022/02/UnidadesTratamentoTabagismo-SITE-MRJ-4-01-21.docx.pdf))
-   - Endereço: Estrada da Gávea, 445, Rocinha, Rio de Janeiro - RJ
-   - Observação sobre o endereço: Fontes oficiais divergem: um documento da Prefeitura, sem data, indica Estrada da Gávea, 522 (curva do S). Confirme o endereço por telefone antes de ir.
-   - Telefone: (21) 3322-7395 / (21) 3322-6694
-   - Horário: Confirmar por telefone
-
-3. **Clínica da Família Santa Marta** (Botafogo)
-   - Fonte: Lista de unidades da SMS-Rio, 2021 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2022/02/UnidadesTratamentoTabagismo-SITE-MRJ-4-01-21.docx.pdf))
-   - Endereço: Rua São Clemente, 312, Botafogo, Rio de Janeiro - RJ
-   - Telefone: (21) 2286-2374
-   - Horário: Confirmar por telefone
-
-4. **Clínica da Família Pavão-Pavãozinho e Cantagalo** (Copacabana)
-   - Fonte: Lista de unidades da SMS-Rio, 2021 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2022/02/UnidadesTratamentoTabagismo-SITE-MRJ-4-01-21.docx.pdf))
-   - Endereço: Ladeira Saint Roman, 172, Copacabana, Rio de Janeiro - RJ
-   - Telefone: (21) 2523-4127 / (21) 2513-1549
-   - Horário: Confirmar por telefone
-
-5. **Clínica da Família Herbert de Souza** (Tomás Coelho)
-   - Fonte: Lista de unidades da SMS-Rio, 2021 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2022/02/UnidadesTratamentoTabagismo-SITE-MRJ-4-01-21.docx.pdf))
-   - Endereço: Av. Pastor Martin Luther King Jr., 4420, Tomás Coelho, Rio de Janeiro - RJ
-   - Observação sobre o endereço: O endereço também consta na lista da SMS-Rio de 2025 (4420/4676). O endereço anterior do app, na Maré, estava incorreto.
-   - Telefone: (21) 3352-4528
-   - Horário: Confirmar por telefone
-
-### B) Unidades com Endereço com Fonte (`endereco_com_fonte`)
-*(Endereço e, quando disponível, CNES extraídos de publicação oficial. Telefone e horário sem fonte divulgada devem ser confirmados na Central 1746 ou no CNES):*
-
-1. **Clínica da Família Zilda Arns** (Complexo do Alemão)
-   - Fonte: Lista de unidades de referência de vacinação da SMS-Rio (09/10/2025), 2025 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2025/10/CONCENTRADORAS-PFIZER-BABY-09.10.2025.pdf))
-   - Endereço: Estrada do Itararé, 951 (subsolo), Complexo do Alemão, Rio de Janeiro - RJ, CEP 21061-240
-   - CNES: 3784975 (cnes.saude.gov.br)
-   - Telefone e horário: Confirmar na Central 1746 ou no CNES
-
-2. **Clínica da Família Victor Valla** (Manguinhos)
-   - Fonte: Lista de unidades de referência de vacinação da SMS-Rio (09/10/2025), 2025 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2025/10/CONCENTRADORAS-PFIZER-BABY-09.10.2025.pdf))
-   - Endereço: Av. Dom Hélder Câmara, 1390 (fundos), Manguinhos, Rio de Janeiro - RJ, CEP 20973-012
-   - CNES: 6514022 (cnes.saude.gov.br)
-   - Observação: Telefones e horários variam entre as fontes consultadas. Confirme antes de ir.
-   - Telefone e horário: Confirmar na Central 1746 ou no CNES
-
-3. **Clínica da Família Amélia dos Santos Ferreira** (Encantado)
-   - Fonte: Lista de unidades de referência de vacinação da SMS-Rio (09/10/2025), 2025 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2025/10/CONCENTRADORAS-PFIZER-BABY-09.10.2025.pdf))
-   - Endereço: Rua Pompílio de Albuquerque, 386, Encantado, Rio de Janeiro - RJ
-   - Telefone e horário: Confirmar na Central 1746 ou no CNES
-
-4. **Clínica da Família Chapéu Mangueira e Babilônia** (Leme)
-   - Fonte: Documento da Prefeitura do Rio (lista de pontos de vacinação, sem data), sem data ([rio.rj.gov.br](https://www.rio.rj.gov.br/documents/73801/b073a96d-c964-4501-87a4-3ce5abf75da0))
-   - Endereço: Rua São Francisco, 5 (Babilônia), Leme, Rio de Janeiro - RJ
-   - Telefone e horário: Confirmar na Central 1746 ou no CNES
-
-5. **UPA 24h Manguinhos** (Manguinhos)
-   - Fonte: Lista de serviços da Secretaria de Estado de Saúde do RJ, sem data ([riocomsaude.rj.gov.br](http://www.riocomsaude.rj.gov.br/Publico/MostrarArquivo.aspx?C=MJ5XqDR4hFY%3D))
-   - Endereço: Av. Dom Hélder Câmara, 1390, Manguinhos, Rio de Janeiro - RJ
-   - Horário: Funciona 24 horas (característica do tipo de unidade)
-   - Telefone: Confirmar na Central 1746
-
-6. **Clínica da Família Vila do João** (Complexo da Maré)
-   - Fonte: Lista de unidades de referência de vacinação da SMS-Rio (09/10/2025), 2025 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2025/10/CONCENTRADORAS-PFIZER-BABY-09.10.2025.pdf))
-   - Endereço: Rua 17, s/nº, Vila do João, Maré, Rio de Janeiro - RJ
-   - Telefone e horário: Confirmar na Central 1746 ou no CNES
-
-7. **Centro Municipal de Saúde Hamilton Land** (Cidade de Deus)
-   - Fonte: Lista de unidades de referência de vacinação da SMS-Rio (09/10/2025), 2025 ([saude.prefeitura.rio](https://saude.prefeitura.rio/wp-content/uploads/sites/47/2025/10/CONCENTRADORAS-PFIZER-BABY-09.10.2025.pdf))
-   - Endereço: Av. Edgar Werneck, 1601, Cidade de Deus, Rio de Janeiro - RJ
-   - Telefone e horário: Confirmar na Central 1746 ou no CNES
-
-### C) Unidades com Dados a Confirmar (`a_confirmar`)
-*(Endereço, telefone e horário sem fonte oficial localizada até o momento; pendentes de confirmação no CNES em [cnes.saude.gov.br](https://cnes.saude.gov.br/) ou pela Central 1746 da Prefeitura do Rio):*
-
-1. **UPA 24h Rocinha** (São Conrado)
-   - Fonte: Fonte não encontrada (dados pendentes de localização cadastral no CNES / Central 1746)
-   - Endereço: Confirmar no CNES (cnes.saude.gov.br) ou na Central 1746
-   - Telefone: Confirmar na Central 1746
-   - Horário: Funciona 24 horas (característica do tipo de unidade)
-
----
-
-## 5. Privacidade e LGPD
-- Sem cookies de rastreamento comercial ou anúncios.
-- Zero transmissão de dados pessoais a servidores próprios.
-- Botão no app para apagar todos os dados armazenados no navegador a qualquer momento.
+</div>
