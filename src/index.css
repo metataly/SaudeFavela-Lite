@@ -4,6 +4,8 @@
   html {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    font-size: 100%;
+    transition: font-size 0.15s ease-out;
   }
 
   body {
@@ -18,8 +20,42 @@
   }
 }
 
+/* Escalonamento Acessível de Tipografia (WCAG) */
+html[data-font-size="normal"] {
+  font-size: 100%;
+}
+
+html[data-font-size="large"] {
+  font-size: 118.75%;
+}
+
+html[data-font-size="extralarge"] {
+  font-size: 137.5%;
+}
+
+/* Escala proporcional para elementos com tamanhos fixos em pixels */
+html[data-font-size="large"] .text-\[10px\] {
+  font-size: 0.75rem !important;
+}
+html[data-font-size="large"] .text-\[11px\] {
+  font-size: 0.82rem !important;
+}
+
+html[data-font-size="extralarge"] .text-\[10px\] {
+  font-size: 0.85rem !important;
+}
+html[data-font-size="extralarge"] .text-\[11px\] {
+  font-size: 0.95rem !important;
+}
+
 /* Redução de movimento acessível */
-.reduce-motion *,
+.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -27,6 +63,11 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Alto Contraste */
+.high-contrast {
+  filter: contrast(125%) saturate(120%);
 }
 
 /* Área de segurança para celulares com notch ou gestos */

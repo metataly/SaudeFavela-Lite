@@ -602,7 +602,7 @@ export async function runTechnicalEvaluations(): Promise<TechnicalTestResult[]> 
       status: !hasVerificadaCnes ? 'aprovado' : 'reprovado',
       assertion: 'assert(!units.some(u => u.verificationStatus === "verificada_cnes"))',
       details: !hasVerificadaCnes
-        ? 'Nenhuma unidade classificada com o rótulo indevido "verificada_cnes". Unidades categorizadas apenas como "fonte_oficial_datada" ou "a_confirmar".'
+        ? 'Nenhuma unidade classificada com o rótulo indevido "verificada_cnes". Unidades categorizadas apenas como "fonte_oficial_datada", "endereco_com_fonte" ou "a_confirmar".'
         : 'FALHA: Encontrada unidade com status "verificada_cnes".',
       executionTimestamp: now,
       reproducibilityStep: 'Inspecione os valores de verificationStatus em HEALTH_UNITS_DATA.',
@@ -624,14 +624,25 @@ export async function runTechnicalEvaluations(): Promise<TechnicalTestResult[]> 
   // 15. TESTE DE CONFORMIDADE DE DADOS: Unidades Oficiais Datadas com Telefone e Endereço
   // =========================================================================
   try {
+    const isNotRootDomain = (url: string): boolean => {
+      try {
+        const parsed = new URL(url);
+        return parsed.pathname.length > 1;
+      } catch {
+        return false;
+      }
+    };
+
     const datedUnits = HEALTH_UNITS_DATA.filter(u => u.verificationStatus === 'fonte_oficial_datada');
     const allHaveContactAndAddress = datedUnits.length > 0 && datedUnits.every(u =>
-      u.address &&
+      Boolean(u.address) &&
       !u.address.includes('Confirmar') &&
-      u.phone &&
+      Boolean(u.phone) &&
       !u.phone.includes('Confirmar') &&
-      u.dataSource &&
-      u.sourceYear
+      Boolean(u.dataSource) &&
+      Boolean(u.sourceYear) &&
+      Boolean(u.sourceUrl) &&
+      isNotRootDomain(u.sourceUrl)
     );
 
     results.push({
@@ -640,12 +651,12 @@ export async function runTechnicalEvaluations(): Promise<TechnicalTestResult[]> 
       category: 'Rigor Técnico & Legal',
       testType: 'unitario',
       status: allHaveContactAndAddress ? 'aprovado' : 'reprovado',
-      assertion: 'assert(datedUnits.every(u => hasAddress && hasPhone && hasSourceYear))',
+      assertion: 'assert(datedUnits.every(u => hasAddress && hasPhone && hasSourceYear && isNotRootDomain(u.sourceUrl)))',
       details: allHaveContactAndAddress
-        ? `Todas as ${datedUnits.length} unidades com fonte oficial datada possuem endereço, telefone, fonte e ano especificados.`
-        : 'FALHA: Unidade com status "fonte_oficial_datada" sem telefone ou endereço oficial preenchido.',
+        ? `Todas as ${datedUnits.length} unidades com fonte oficial datada possuem endereço, telefone sem "Confirmar", fonte, ano e link não-raiz.`
+        : 'FALHA: Unidade "fonte_oficial_datada" sem telefone válido, com endereço a confirmar ou URL com domínio raiz apenas.',
       executionTimestamp: now,
-      reproducibilityStep: 'Filtre unidades com verificationStatus === "fonte_oficial_datada" e verifique endereço/telefone.',
+      reproducibilityStep: 'Filtre unidades com verificationStatus === "fonte_oficial_datada" e verifique endereço/telefone/URL.',
     });
   } catch (err: any) {
     results.push({
@@ -680,7 +691,7 @@ export async function runTechnicalEvaluations(): Promise<TechnicalTestResult[]> 
       status: !hasExtraneousFields ? 'aprovado' : 'reprovado',
       assertion: 'assert(!units.some(u => u.landmarks || u.accessibilityFeatures || u.fieldAuditNotes || u.coordinates))',
       details: !hasExtraneousFields
-        ? 'Todas as 11 unidades possuem estritamente os dados oficiais confirmáveis (nome, endereço, telefone, AP, fonte e status).'
+        ? `Todas as ${HEALTH_UNITS_DATA.length} unidades possuem estritamente os dados oficiais confirmáveis (nome, endereço, telefone, AP, fonte e status).`
         : 'FALHA: Encontrada unidade contendo landmarks, accessibilityFeatures, fieldAuditNotes, servicesOffered ou coordinates.',
       executionTimestamp: now,
       reproducibilityStep: 'Inspecione os objetos em HEALTH_UNITS_DATA para verificar ausência de campos não auditados.',
@@ -699,36 +710,42 @@ export async function runTechnicalEvaluations(): Promise<TechnicalTestResult[]> 
   }
 
   // =========================================================================
-  // 17. TESTE DE CONFORMIDADE DE HORÁRIOS: Unidades Datadas com "Confirmar por telefone"
+  // 17. TESTE DE CONFORMIDADE DE HORÁRIOS: Exigência de "Confirmar..." para Unidades Não-UPA
   // =========================================================================
   try {
-    const datedUnits = HEALTH_UNITS_DATA.filter(u => u.verificationStatus === 'fonte_oficial_datada');
-    const allDatedHaveHoursToConfirmByPhone = datedUnits.length > 0 && datedUnits.every(u =>
-      u.hours === 'Confirmar por telefone'
+    const nonUpaUnits = HEALTH_UNITS_DATA.filter(u => u.unitType !== 'upa_emergencia');
+    const allNonUpaHoursConfirm = nonUpaUnits.length > 0 && nonUpaUnits.every(u =>
+      u.hours.includes('Confirmar')
     );
+    const upaUnits = HEALTH_UNITS_DATA.filter(u => u.unitType === 'upa_emergencia');
+    const allUpa24h = upaUnits.length > 0 && upaUnits.every(u =>
+      u.hours === 'Funciona 24 horas'
+    );
+
+    const test17Passed = allNonUpaHoursConfirm && allUpa24h;
 
     results.push({
       id: 'test-17-dated-units-hours-confirm-by-phone',
-      title: '17. Integridade Cadastral: Horários das Unidades Oficiais Datadas ("Confirmar por telefone")',
+      title: '17. Integridade Cadastral: Horários Exigem "Confirmar..." Apenas para Unidades que Não Sejam UPA',
       category: 'Rigor Técnico & Legal',
       testType: 'unitario',
-      status: allDatedHaveHoursToConfirmByPhone ? 'aprovado' : 'reprovado',
-      assertion: 'assert(datedUnits.every(u => u.hours === "Confirmar por telefone"))',
-      details: allDatedHaveHoursToConfirmByPhone
-        ? 'Todas as unidades com status "fonte_oficial_datada" possuem o horário definido como "Confirmar por telefone", condizente com a fonte SMS-Rio 2021.'
-        : 'FALHA: Unidade "fonte_oficial_datada" possui horário diferente de "Confirmar por telefone".',
+      status: test17Passed ? 'aprovado' : 'reprovado',
+      assertion: 'assert(nonUpaUnits.every(u => u.hours.includes("Confirmar")) && upaUnits.every(u => u.hours === "Funciona 24 horas"))',
+      details: test17Passed
+        ? `Todas as unidades que não são UPAs exigem confirmação de horário ("Confirmar..."), e as UPAs registram "Funciona 24 horas".`
+        : 'FALHA: Unidade de atenção básica sem exigência de confirmação de horário ou UPA sem indicação de 24 horas.',
       executionTimestamp: now,
-      reproducibilityStep: 'Inspecione o campo hours de todas as unidades com verificationStatus === "fonte_oficial_datada".',
+      reproducibilityStep: 'Inspecione o campo hours em HEALTH_UNITS_DATA.',
     });
   } catch (err: any) {
     results.push({
       id: 'test-17-dated-units-hours-confirm-by-phone',
-      title: '17. Horários das Unidades Oficiais Datadas',
+      title: '17. Horários das Unidades de Saúde',
       category: 'Rigor Técnico & Legal',
       testType: 'unitario',
       status: 'reprovado',
-      assertion: 'assert(allDatedHaveHoursToConfirmByPhone)',
-      details: `Erro ao testar horários das unidades datadas: ${err?.message}`,
+      assertion: 'assert(test17Passed)',
+      details: `Erro ao testar horários das unidades: ${err?.message}`,
       executionTimestamp: now,
     });
   }
@@ -765,6 +782,99 @@ export async function runTechnicalEvaluations(): Promise<TechnicalTestResult[]> 
       status: 'reprovado',
       assertion: 'assert(!hasCegonhaCarioca)',
       details: `Erro ao verificar ausência de Cegonha Carioca: ${err?.message}`,
+      executionTimestamp: now,
+    });
+  }
+
+  // =========================================================================
+  // 19. NOVO TESTE: Unidades 'endereco_com_fonte'
+  // =========================================================================
+  try {
+    const isNotRootDomain = (url: string): boolean => {
+      try {
+        const parsed = new URL(url);
+        return parsed.pathname.length > 1;
+      } catch {
+        return false;
+      }
+    };
+
+    const enderecoUnits = HEALTH_UNITS_DATA.filter(u => u.verificationStatus === 'endereco_com_fonte');
+    const allEnderecoValid = enderecoUnits.length > 0 && enderecoUnits.every(u =>
+      Boolean(u.address) &&
+      !u.address.includes('Confirmar') &&
+      Boolean(u.dataSource) &&
+      Boolean(u.sourceYear) &&
+      Boolean(u.sourceUrl) &&
+      isNotRootDomain(u.sourceUrl) &&
+      Boolean(u.phone) &&
+      u.phone.includes('Confirmar')
+    );
+
+    results.push({
+      id: 'test-19-endereco-com-fonte-completeness',
+      title: '19. Integridade Cadastral: Unidades com Status "endereco_com_fonte"',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: allEnderecoValid ? 'aprovado' : 'reprovado',
+      assertion: 'assert(enderecoUnits.every(u => addressWithoutConfirm && hasSource && isNotRootDomain && phoneHasConfirm))',
+      details: allEnderecoValid
+        ? `Todas as ${enderecoUnits.length} unidades com status "endereco_com_fonte" têm endereço sem "Confirmar", fonte, ano, link não-raiz e telefone contendo "Confirmar".`
+        : 'FALHA: Unidade "endereco_com_fonte" sem endereço real, sem fonte documentada ou com telefone inventado sem confirmação.',
+      executionTimestamp: now,
+      reproducibilityStep: 'Inspecione unidades com verificationStatus === "endereco_com_fonte" em HEALTH_UNITS_DATA.',
+    });
+  } catch (err: any) {
+    results.push({
+      id: 'test-19-endereco-com-fonte-completeness',
+      title: '19. Unidades com Status "endereco_com_fonte"',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: 'reprovado',
+      assertion: 'assert(allEnderecoValid)',
+      details: `Erro ao testar unidades "endereco_com_fonte": ${err?.message}`,
+      executionTimestamp: now,
+    });
+  }
+
+  // =========================================================================
+  // 20. NOVO TESTE: Correção Territorial de Herbert de Souza e Amélia dos Santos
+  // =========================================================================
+  try {
+    const herbertUnit = HEALTH_UNITS_DATA.find(u => u.id === 'cf-herbert-de-souza');
+    const ameliaUnit = HEALTH_UNITS_DATA.find(u => u.id === 'cf-amelia-dos-santos');
+
+    const herbertCorrect = herbertUnit ? !herbertUnit.community.includes('Maré') : false;
+    const ameliaCorrect = ameliaUnit ? (
+      !ameliaUnit.community.includes('Cidade de Deus') &&
+      !ameliaUnit.neighborhood.includes('Cidade de Deus') &&
+      !ameliaUnit.address.includes('Cidade de Deus')
+    ) : false;
+
+    const locationsCorrect = herbertCorrect && ameliaCorrect;
+
+    results.push({
+      id: 'test-20-territorial-corrections-herbert-amelia',
+      title: '20. Integridade Territorial: Correções Cadastrais (Herbert de Souza e Amélia dos Santos)',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: locationsCorrect ? 'aprovado' : 'reprovado',
+      assertion: 'assert(!herbert.community.includes("Maré") && !amelia.community.includes("Cidade de Deus"))',
+      details: locationsCorrect
+        ? 'Herbert de Souza corrigida para Tomás Coelho (sem Maré) e Amélia dos Santos corrigida para Encantado (sem Cidade de Deus).'
+        : 'FALHA: Encontrada referência territorial incorreta em Herbert de Souza (Maré) ou Amélia dos Santos (Cidade de Deus).',
+      executionTimestamp: now,
+      reproducibilityStep: 'Inspecione as unidades cf-herbert-de-souza e cf-amelia-dos-santos em HEALTH_UNITS_DATA.',
+    });
+  } catch (err: any) {
+    results.push({
+      id: 'test-20-territorial-corrections-herbert-amelia',
+      title: '20. Correções Territoriais Cadastrais',
+      category: 'Rigor Técnico & Legal',
+      testType: 'unitario',
+      status: 'reprovado',
+      assertion: 'assert(locationsCorrect)',
+      details: `Erro ao testar correções territoriais: ${err?.message}`,
       executionTimestamp: now,
     });
   }

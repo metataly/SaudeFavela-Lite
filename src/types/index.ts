@@ -13,6 +13,7 @@ export type ZoneRJ = 'Zona Sul' | 'Zona Norte' | 'Zona Oeste' | 'Centro';
 
 export type UnitVerificationStatus = 
   | 'fonte_oficial_datada'
+  | 'endereco_com_fonte'
   | 'a_confirmar';
 
 export interface HealthUnit {
@@ -24,6 +25,8 @@ export interface HealthUnit {
   zone: ZoneRJ;
   healthDistrict: string;   // Área de Planejamento (ex.: AP 2.1, AP 3.1, AP 4.0)
   address: string;
+  addressNote?: string;     // Observação/divergência sobre o endereço
+  cnes?: string;            // Código no Cadastro Nacional de Estabelecimentos de Saúde
   landmarks?: string;
   hours: string;
   phone: string;

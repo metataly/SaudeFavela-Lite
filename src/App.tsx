@@ -34,6 +34,32 @@ export default function App() {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [currentAudioText, setCurrentAudioText] = useState('');
 
+  // Aplica tamanho de fonte e configurações no elemento raiz (HTML) para escalonamento visual completo
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute('data-font-size', settings.fontSize);
+
+    if (settings.fontSize === 'extralarge') {
+      root.style.fontSize = '137.5%'; // ~22px base
+    } else if (settings.fontSize === 'large') {
+      root.style.fontSize = '118.75%'; // ~19px base
+    } else {
+      root.style.fontSize = '100%'; // 16px base padrão
+    }
+
+    if (settings.highContrast) {
+      root.classList.add('high-contrast');
+    } else {
+      root.classList.remove('high-contrast');
+    }
+
+    if (settings.reducedMotion) {
+      root.classList.add('reduce-motion');
+    } else {
+      root.classList.remove('reduce-motion');
+    }
+  }, [settings.fontSize, settings.highContrast, settings.reducedMotion]);
+
   // Atualiza e persiste preferências de acessibilidade
   const handleUpdateSettings = (newSettings: AccessibilitySettings) => {
     setSettings(newSettings);

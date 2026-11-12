@@ -11,7 +11,8 @@ import {
   AlertCircle,
   Volume2,
   CalendarCheck2,
-  FileText
+  FileText,
+  ExternalLink
 } from 'lucide-react';
 import { HealthUnit } from '../types';
 import { HEALTH_UNITS_DATA } from '../data/healthUnitsData';
@@ -107,7 +108,8 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
     const text = `
       ${unit.name}.
       Localizada em ${unit.community}, no bairro ${unit.neighborhood}, Área de Planejamento ${unit.healthDistrict}.
-      Endereço: ${unit.address}.
+      Endereço: ${unit.address}. ${unit.addressNote ? `Observação: ${unit.addressNote}.` : ''}
+      ${unit.cnes ? `Cadastro Nacional de Estabelecimentos de Saúde, CNES número ${unit.cnes}.` : ''}
       Horário de funcionamento: ${unit.hours}.
       Telefone: ${unit.phone}.
       Serviços: ${unitServices}
@@ -139,7 +141,7 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
             type="search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Ex: Rocinha, Maré, Alemão, Cidade de Deus, Santa Marta..."
+            placeholder="Ex: Rocinha, Alemão, Manguinhos, Maré, Santa Marta..."
             className="w-full min-h-[48px] pl-11 pr-24 py-2.5 bg-white border border-slate-300 rounded-2xl text-sm text-slate-900 placeholder:text-slate-600 focus:outline-hidden focus:ring-2 focus:ring-sky-600 focus:border-sky-600 shadow-2xs"
           />
           <div className="absolute right-2 flex items-center gap-1">
@@ -242,8 +244,8 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
           {filteredUnits.map((unit) => {
             const isSaved = savedIds.includes(unit.id);
             const isUpa = unit.unitType === 'upa_emergencia';
-            const isDatedSource = unit.verificationStatus === 'fonte_oficial_datada';
-            const hasDirectPhone = !unit.phone.includes('Confirmar');
+            const hasDirectPhone = unit.verificationStatus === 'fonte_oficial_datada' && !unit.phone.includes('Confirmar');
+            const sourceYearLabel = unit.sourceYear || 'ano não informado';
 
             return (
               <article
@@ -298,8 +300,32 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                 <div className="mt-3.5 space-y-2 text-xs text-slate-600">
                   <div className="flex items-start gap-2">
                     <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" aria-hidden="true" />
-                    <p className="font-medium text-slate-800">{unit.address}</p>
+                    <div className="flex-1">
+                      <p className="font-medium text-slate-800">{unit.address}</p>
+                      {unit.addressNote && (
+                        <p className="text-[11px] text-amber-900 bg-amber-50 border border-amber-200/70 rounded-lg p-2 mt-1 leading-snug">
+                          {unit.addressNote}
+                        </p>
+                      )}
+                    </div>
                   </div>
+
+                  {unit.cnes && (
+                    <div className="flex items-center gap-2 text-[11px] text-slate-600">
+                      <FileText className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
+                      <span>
+                        CNES {unit.cnes}. Confira em{' '}
+                        <a
+                          href="https://cnes.saude.gov.br"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sky-700 hover:text-sky-900 underline font-medium"
+                        >
+                          cnes.saude.gov.br
+                        </a>
+                      </span>
+                    </div>
+                  )}
 
                   <div className="flex items-center gap-2">
                     <Clock className="w-4 h-4 text-slate-400 shrink-0" aria-hidden="true" />
@@ -332,26 +358,48 @@ export const UnitsView: React.FC<UnitsViewProps> = ({
                   </p>
                 </div>
 
-                {/* Rodapé com Fonte, Ano e Confirmação */}
-                <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[11px] text-slate-600">
-                  <div className="flex items-center gap-1.5">
-                    <FileText className="w-4 h-4 text-slate-500 shrink-0" />
-                    <span>
-                      {isDatedSource
-                        ? `Dados conforme ${unit.dataSource}, ${unit.sourceYear || '2021'}. Confirme por telefone antes de ir.`
-                        : 'Dados a confirmar no CNES (cnes.saude.gov.br) ou na Central 1746 antes de ir.'}
-                    </span>
+                {/* Rodapé com Fonte, Ano, Link e Confirmação */}
+                <div className="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-2.5 text-[11px] text-slate-600">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex items-start sm:items-center gap-1.5 flex-1">
+                      <FileText className="w-4 h-4 text-slate-500 shrink-0 mt-0.5 sm:mt-0" />
+                      <span>
+                        {unit.verificationStatus === 'fonte_oficial_datada' && (
+                          `Dados conforme ${unit.dataSource}, ${sourceYearLabel}. Confirme por telefone antes de ir.`
+                        )}
+                        {unit.verificationStatus === 'endereco_com_fonte' && (
+                          `Endereço conforme ${unit.dataSource}, ${sourceYearLabel}. Telefone e horário: confirme na Central 1746 ou no CNES antes de ir.`
+                        )}
+                        {unit.verificationStatus === 'a_confirmar' && (
+                          'Dados a confirmar no CNES (cnes.saude.gov.br) ou na Central 1746 antes de ir.'
+                        )}
+                      </span>
+                    </div>
+
+                    {unit.sourceUrl && (
+                      <a
+                        href={unit.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-sky-700 hover:text-sky-900 underline font-semibold shrink-0 min-h-[44px]"
+                      >
+                        <span>Ver fonte</span>
+                        <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                      </a>
+                    )}
                   </div>
 
                   {!isUpa && (
-                    <button
-                      type="button"
-                      onClick={() => onSelectForSimulation(unit)}
-                      className="min-h-[44px] px-4 py-2 bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition active:scale-95 shadow-xs"
-                    >
-                      <CalendarCheck2 className="w-4 h-4" />
-                      <span>Simular Agendamento nesta unidade</span>
-                    </button>
+                    <div className="flex justify-end pt-1">
+                      <button
+                        type="button"
+                        onClick={() => onSelectForSimulation(unit)}
+                        className="min-h-[44px] px-4 py-2 bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-1.5 transition active:scale-95 shadow-xs w-full sm:w-auto"
+                      >
+                        <CalendarCheck2 className="w-4 h-4" />
+                        <span>Simular Agendamento nesta unidade</span>
+                      </button>
+                    </div>
                   )}
                 </div>
               </article>
